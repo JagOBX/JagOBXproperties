@@ -1,0 +1,68 @@
+name: Build and publish site
+
+# Builds src/App.jsx into docs/ and commits the result. GitHub Pages is set to
+# serve this repo from the docs/ folder on main, so committing there publishes.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-site
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Nothing to build until the website script has been added. Exiting
+      # cleanly here keeps the live site untouched instead of publishing a
+      # broken build.
+      - name: Check for the website script
+        id: check
+        run: |
+          if [ -f src/App.jsx ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::src/App.jsx not found - skipping the build. Add the website script to src/App.jsx."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.found == 'true'
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        if: steps.check.outputs.found == 'true'
+        run: npm install
+
+      - name: Remove the previous bundle
+        if: steps.check.outputs.found == 'true'
+        run: rm -f docs/assets/index-*.js
+
+      - name: Build
+        if: steps.check.outputs.found == 'true'
+        run: npm run build
+
+      - name: Commit the built site
+        if: steps.check.outputs.found == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --staged --quiet; then
+            echo "Build output unchanged."
+          else
+            git commit -m "Build site [skip ci]"
+            git push
+          fi
+
