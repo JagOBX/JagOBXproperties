@@ -79,7 +79,7 @@ function parseFrontMatter(raw) {
 
 const unquote = (v) => v.trim().replace(/^["'](.*)["']$/, "$1");
 
-function layout({ title, description, canonical, schema, body, breadcrumb }) {
+function layout({ title, description, canonical, schema, body, hero }) {
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -133,7 +133,36 @@ function layout({ title, description, canonical, schema, body, breadcrumb }) {
       header.site nav a { color: ${C.foam}; text-decoration: none; font-size: 14px; }
       header.site nav a:hover { text-decoration: underline; }
 
-      main { padding: 2.5rem 0 3.5rem; }
+      main { padding: 0 0 3.5rem; }
+
+      /* Hero band. Uses the article photo when there is one, brand colour when
+         there is not, so a photo-less article still looks deliberate. */
+      .hero {
+        background: ${C.navy}; color: ${C.foam}; padding: 3rem 0 2.5rem; margin-bottom: 2.5rem;
+        background-size: cover; background-position: center;
+      }
+      .hero .wrap { position: relative; }
+      .hero h1 { color: ${C.foam}; }
+      .hero .kicker { color: #FFB3B3; }
+      .hero .byline { color: ${C.sand}; margin-bottom: 0; opacity: 0.9; }
+      .hero .crumb { color: ${C.sand}; opacity: 0.85; }
+      .hero .crumb a { color: ${C.sand}; }
+      .hero-lede { font-size: 1.15rem; color: ${C.sand}; margin: 0.75rem 0 0; max-width: 34em; }
+
+      figure { margin: 2rem 0; }
+      figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
+      figcaption { font-size: 14px; color: ${C.meta}; margin-top: 0.5rem; }
+
+      .glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px;
+        background: ${C.sand}; border: 1px solid ${C.sand}; border-radius: 6px; overflow: hidden; margin: 0 0 2.5rem; }
+      .glance div { background: ${C.foam}; padding: 0.9rem 1rem; }
+      .glance dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em;
+        text-transform: uppercase; color: ${C.meta}; margin: 0 0 0.25rem; }
+      .glance dd { margin: 0; font-size: 15px; font-weight: 500; line-height: 1.45; }
+
+      .property { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
+      .property img { width: 190px; height: 130px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+      .property-body { flex: 1; min-width: 220px; }
       .crumb {
         font-family: 'JetBrains Mono', monospace; font-size: 12px;
         letter-spacing: 0.06em; color: ${C.meta}; margin: 0 0 1rem;
@@ -217,9 +246,9 @@ function layout({ title, description, canonical, schema, body, breadcrumb }) {
         </nav>
       </div>
     </header>
+    ${hero || ""}
     <main id="main-content" tabindex="-1">
       <div class="wrap">
-        ${breadcrumb ? `<p class="crumb">${breadcrumb}</p>` : ""}
 ${body}
       </div>
     </main>
@@ -235,22 +264,31 @@ ${body}
 `;
 }
 
-function factsTable(d) {
+function glance(d) {
   const rows = [
     ["Where", d.location],
-    ["Address", d.address],
     ["Cost", d.cost],
     ["Season", d.season],
     ["Time needed", d.duration],
     ["Good for", d.goodFor],
+    ["Address", d.address],
   ].filter(([, v]) => v);
   if (!rows.length) return "";
-  return `<table class="facts">
-  <caption class="sr-only"></caption>
-  <tbody>
-${rows.map(([k, v]) => `    <tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join("\n")}
-  </tbody>
-</table>`;
+  return `<dl class="glance">
+${rows.map(([k, v]) => `  <div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("\n")}
+</dl>`;
+}
+
+// Copies content/images into docs/images so articles can reference photos at
+// /images/<file>. Anything dropped in that folder is published as-is.
+function copyImages() {
+  const src = path.join(ROOT, "content", "images");
+  if (!fs.existsSync(src)) return [];
+  const dest = path.join(OUT, "images");
+  fs.mkdirSync(dest, { recursive: true });
+  const files = fs.readdirSync(src).filter((f) => /\.(jpe?g|png|webp|avif|svg)$/i.test(f));
+  files.forEach((f) => fs.copyFileSync(path.join(src, f), path.join(dest, f)));
+  return files;
 }
 
 // House style: no em dashes, en dashes, or a hyphen used as a connector. They are
@@ -273,7 +311,38 @@ function checkStyle(file, raw) {
   }
 }
 
-function buildArticle(file) {
+// The property photos already live inside src/App.jsx as data URLs. Rather than
+// duplicating them in the repo, pull each listing's cover shot out at build time
+// and write it as a real image file, so article pages can show a photo of the
+// place being recommended. Fails quietly if the app source is not present.
+function extractListingPhotos() {
+  const appPath = path.join(ROOT, "src", "App.jsx");
+  const out = {};
+  if (!fs.existsSync(appPath)) return out;
+  const src = fs.readFileSync(appPath, "utf8");
+
+  const arrays = {};
+  const arrayRe = /const\s+(\w+Images)\s*=\s*\[([\s\S]*?)\n\]/g;
+  let m;
+  while ((m = arrayRe.exec(src))) {
+    arrays[m[1]] = [...m[2].matchAll(/data:image\/jpeg;base64,([A-Za-z0-9+/=]+)/g)].map((x) => x[1]);
+  }
+
+  const listingRe = /id:\s*"([\w-]+)"[\s\S]*?images:\s*(\w+)[\s\S]*?coverIndex:\s*(\d+)/g;
+  const dir = path.join(OUT, "images");
+  while ((m = listingRe.exec(src))) {
+    const [, id, arrayName, idx] = m;
+    const photos = arrays[arrayName];
+    if (!photos || !photos[Number(idx)]) continue;
+    fs.mkdirSync(dir, { recursive: true });
+    const file = `listing-${id}.jpg`;
+    fs.writeFileSync(path.join(dir, file), Buffer.from(photos[Number(idx)], "base64"));
+    out[id] = `/images/${file}`;
+  }
+  return out;
+}
+
+function buildArticle(file, listingPhotos = {}) {
   const raw = fs.readFileSync(path.join(SRC, file), "utf8");
   checkStyle(file, raw);
   const { data, body } = parseFrontMatter(raw);
@@ -295,6 +364,7 @@ function buildArticle(file) {
       author: { "@type": "Organization", name: BRAND, url: SITE },
       publisher: { "@type": "Organization", name: BRAND, url: SITE },
       mainEntityOfPage: url,
+      image: data.hero || data.photo ? `${SITE}${data.hero || data.photo}` : undefined,
       about: data.attraction
         ? { "@type": "TouristAttraction", name: data.attraction, address: data.address || data.location }
         : undefined,
@@ -341,25 +411,54 @@ function buildArticle(file) {
         .join("\n")}`
     : "";
 
+  if (!data.listingPhoto && data.listing && listingPhotos[data.listing]) {
+    data.listingPhoto = listingPhotos[data.listing];
+  }
+  const propertyPhoto = data.listingPhoto
+    ? `<img src="${esc(data.listingPhoto)}" alt="${esc(data.listingPhotoAlt || "One of our Outer Banks rentals")}" loading="lazy" />`
+    : "";
   const cta = `<div class="cta">
-  <h2>Staying nearby?</h2>
-  <p>${esc(data.ctaText || "We rent hand-picked places across the Outer Banks, from Corolla to Nags Head.")}</p>
-  <a class="btn" href="/">Browse the properties</a>
+  <div class="property">
+    ${propertyPhoto}
+    <div class="property-body">
+      <h2>Staying nearby?</h2>
+      <p>${esc(data.ctaText || "We rent hand-picked places across the Outer Banks, from Corolla to Nags Head.")}</p>
+      <a class="btn" href="/">Browse the properties</a>
+    </div>
+  </div>
 </div>`;
+
+  // A photo makes the hero; without one the brand colour carries it.
+  const heroStyle = data.hero
+    ? ` style="background-image: linear-gradient(rgba(20,22,26,0.72), rgba(20,22,26,0.86)), url('${esc(data.hero)}')"`
+    : "";
+  const heroBand = `<div class="hero on-dark"${heroStyle}>
+      <div class="wrap">
+        <p class="crumb"><a href="/">Home</a> / <a href="/articles/">Articles</a></p>
+        <p class="kicker">${esc(data.kicker || "Outer Banks guide")}</p>
+        <h1>${esc(data.title)}</h1>
+        ${data.lede ? `<p class="hero-lede">${esc(data.lede)}</p>` : ""}
+        <p class="byline">${data.date ? `Published ${esc(formatDate(data.date))}` : ""}${
+          data.readTime ? ` \u00b7 ${esc(data.readTime)}` : ""
+        }</p>
+      </div>
+    </div>`;
+
+  const figure = data.photo
+    ? `<figure><img src="${esc(data.photo)}" alt="${esc(data.photoAlt || data.attraction || data.title)}" loading="lazy" />${
+        data.photoCaption ? `<figcaption>${esc(data.photoCaption)}</figcaption>` : ""
+      }</figure>`
+    : "";
 
   const html = layout({
     title: data.title,
     description: data.description,
     canonical: url,
     schema: schema.map((s) => JSON.parse(JSON.stringify(s))),
-    breadcrumb: `<a href="/">Home</a> / <a href="/articles/">Articles</a>`,
-    body: `        <p class="kicker">${esc(data.kicker || "Outer Banks guide")}</p>
-        <h1>${esc(data.title)}</h1>
-        <p class="byline">${data.date ? `Published ${esc(formatDate(data.date))}` : ""}${
-          data.readTime ? ` · ${esc(data.readTime)}` : ""
-        }</p>
-        ${data.summary ? `<div class="summary"><h2>In short</h2><p>${esc(data.summary)}</p></div>` : ""}
-        ${factsTable(data)}
+    hero: heroBand,
+    body: `        ${data.summary ? `<div class="summary"><h2>In short</h2><p>${esc(data.summary)}</p></div>` : ""}
+        ${glance(data)}
+        ${figure}
 ${marked.parse(body)}
         ${faqHtml}
         ${cta}`,
@@ -396,7 +495,14 @@ function buildIndex(articles) {
     description:
       "Guides to Outer Banks attractions, beaches and things to do, from Corolla to Nags Head — written for people planning a trip.",
     canonical: `${SITE}/articles/`,
-    breadcrumb: `<a href="/">Home</a> / Articles`,
+    hero: `<div class="hero on-dark">
+      <div class="wrap">
+        <p class="crumb"><a href="/">Home</a> / Articles</p>
+        <p class="kicker">Guides</p>
+        <h1>Things to do on the Outer Banks</h1>
+        <p class="hero-lede">Straight guides to the attractions worth your time between Corolla and Nags Head: what they cost, when to go, and what to expect when you get there.</p>
+      </div>
+    </div>`,
     schema: [
       {
         "@context": "https://schema.org",
@@ -406,10 +512,7 @@ function buildIndex(articles) {
         publisher: { "@type": "Organization", name: BRAND, url: SITE },
       },
     ],
-    body: `        <p class="kicker">Guides</p>
-        <h1>Things to do on the Outer Banks</h1>
-        <p>Straight guides to the attractions worth your time between Corolla and Nags Head — what they cost, when to go, and what to expect when you get there.</p>
-        <ul class="card-list">
+    body: `        <ul class="card-list">
 ${items || "          <li><p>New guides are on the way.</p></li>"}
         </ul>`,
   });
@@ -475,7 +578,9 @@ function main() {
     return;
   }
   const files = fs.readdirSync(SRC).filter((f) => f.endsWith(".md"));
-  const articles = files.map(buildArticle);
+  const listingPhotos = extractListingPhotos();
+  copyImages();
+  const articles = files.map((f) => buildArticle(f, listingPhotos));
   buildIndex(articles);
   buildSitemap(articles);
   buildLlmsTxt(articles);
