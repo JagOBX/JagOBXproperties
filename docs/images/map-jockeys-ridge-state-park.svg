@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" width="720" height="340" role="img" aria-labelledby="mapTitle mapDesc">
+  <title id="mapTitle">Where Jockey's Ridge State Park sits on the Outer Banks</title>
+  <desc id="mapDesc">A diagram of the Outer Banks running from Corolla in the north to Nags Head in the south. Jockey's Ridge State Park is marked in Nags Head. Our rental properties are numbered: 1, Jax's Place in Kitty Hawk; 2, Sound Side Beach Box in Kill Devil Hills; 3, Sennah's Shack in Kill Devil Hills.</desc>
+
+  <rect width="720" height="340" fill="#FCF8F4" />
+
+  <text x="40" y="34" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="0.1em" fill="#A05151">WHERE IT IS</text>
+
+  <!-- Roanoke Sound, west of the islands -->
+  <rect x="0" y="88" width="720" height="40" fill="#DCE7E6" />
+  <text x="40" y="80" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.08em" fill="#6C6C62">ROANOKE SOUND</text>
+
+  <!-- The barrier island itself -->
+  <rect x="0" y="128" width="720" height="46" fill="#F0E6DE" />
+
+  <!-- Atlantic, east -->
+  <rect x="0" y="174" width="720" height="9" fill="#C6D9D8" />
+  <text x="680" y="196" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.08em" fill="#6C6C62">ATLANTIC</text>
+
+  <!-- The road running the length of it -->
+  <line x1="0" y1="157" x2="720" y2="157" stroke="#D9CCC2" stroke-width="2" stroke-dasharray="7 6" />
+
+  <g>
+    <line x1="40" y1="128" x2="40" y2="174" stroke="#D9CCC2" stroke-width="1" />
+    <text x="40" y="168" text-anchor="start" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.05em" fill="#6C6C62">COROLLA</text>
+  </g>
+  <g>
+    <line x1="168" y1="128" x2="168" y2="174" stroke="#D9CCC2" stroke-width="1" />
+    <text x="168" y="168" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.05em" fill="#6C6C62">DUCK</text>
+  </g>
+  <g>
+    <line x1="296" y1="128" x2="296" y2="174" stroke="#D9CCC2" stroke-width="1" />
+    <text x="296" y="168" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.05em" fill="#6C6C62">SOUTHERN SHORES</text>
+  </g>
+  <g>
+    <line x1="424" y1="128" x2="424" y2="174" stroke="#D9CCC2" stroke-width="1" />
+    <text x="424" y="168" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.05em" fill="#6C6C62">KITTY HAWK</text>
+  </g>
+  <g>
+    <line x1="552" y1="128" x2="552" y2="174" stroke="#D9CCC2" stroke-width="1" />
+    <text x="552" y="168" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.05em" fill="#6C6C62">KILL DEVIL HILLS</text>
+  </g>
+  <g>
+    <line x1="680" y1="128" x2="680" y2="174" stroke="#A05151" stroke-width="2" />
+    <text x="680" y="168" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.05em" fill="#A05151" font-weight="600">NAGS HEAD</text>
+  </g>
+
+  <!-- The attraction -->
+  <g>
+    <line x1="680" y1="128" x2="680" y2="102" stroke="#A05151" stroke-width="2" />
+    <circle cx="680" cy="94" r="10" fill="#A05151" />
+    <text x="680" y="98" text-anchor="middle" font-size="11" fill="#FCF8F4" font-family="'Work Sans',sans-serif">★</text>
+    <text x="680" y="72" text-anchor="end" font-family="'Big Shoulders Display','Work Sans',sans-serif" font-size="21" font-weight="700" fill="#201C1E">Jockey's Ridge State Park</text>
+  </g>
+
+  <g>
+    <line x1="424" y1="174" x2="424" y2="189" stroke="#096169" stroke-width="1.5" />
+    <circle cx="424" cy="198" r="9.5" fill="#096169" />
+    <text x="424" y="202" text-anchor="middle" font-family="'Work Sans',sans-serif" font-size="11" font-weight="700" fill="#FCF8F4">1</text>
+  </g>
+  <g>
+    <line x1="537" y1="174" x2="537" y2="189" stroke="#096169" stroke-width="1.5" />
+    <circle cx="537" cy="198" r="9.5" fill="#096169" />
+    <text x="537" y="202" text-anchor="middle" font-family="'Work Sans',sans-serif" font-size="11" font-weight="700" fill="#FCF8F4">2</text>
+  </g>
+  <g>
+    <line x1="567" y1="174" x2="567" y2="189" stroke="#096169" stroke-width="1.5" />
+    <circle cx="567" cy="198" r="9.5" fill="#096169" />
+    <text x="567" y="202" text-anchor="middle" font-family="'Work Sans',sans-serif" font-size="11" font-weight="700" fill="#FCF8F4">3</text>
+  </g>
+
+  <g>
+    <circle cx="48" cy="242" r="8.5" fill="#096169" />
+    <text x="48" y="246" text-anchor="middle" font-family="'Work Sans',sans-serif" font-size="10.5" font-weight="700" fill="#FCF8F4">1</text>
+    <text x="66" y="246" font-family="'Work Sans',sans-serif" font-size="13.5" font-weight="600" fill="#201C1E">Jax's Place</text>
+    <text x="156.2" y="246" font-family="'Work Sans',sans-serif" font-size="13" fill="#6C6C62">Kitty Hawk</text>
+  </g>
+  <g>
+    <circle cx="48" cy="266" r="8.5" fill="#096169" />
+    <text x="48" y="270" text-anchor="middle" font-family="'Work Sans',sans-serif" font-size="10.5" font-weight="700" fill="#FCF8F4">2</text>
+    <text x="66" y="270" font-family="'Work Sans',sans-serif" font-size="13.5" font-weight="600" fill="#201C1E">Sound Side Beach Box</text>
+    <text x="230" y="270" font-family="'Work Sans',sans-serif" font-size="13" fill="#6C6C62">Kill Devil Hills</text>
+  </g>
+  <g>
+    <circle cx="48" cy="290" r="8.5" fill="#096169" />
+    <text x="48" y="294" text-anchor="middle" font-family="'Work Sans',sans-serif" font-size="10.5" font-weight="700" fill="#FCF8F4">3</text>
+    <text x="66" y="294" font-family="'Work Sans',sans-serif" font-size="13.5" font-weight="600" fill="#201C1E">Sennah's Shack</text>
+    <text x="180.79999999999998" y="294" font-family="'Work Sans',sans-serif" font-size="13" fill="#6C6C62">Kill Devil Hills</text>
+  </g>
+
+  <text x="680" y="324" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="0.06em" fill="#6C6C62">DIAGRAM, NOT TO SCALE</text>
+</svg>
