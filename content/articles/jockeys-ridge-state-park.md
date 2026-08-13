@@ -12,6 +12,12 @@ season: "Open year round. 8 a.m. to 9 p.m. May through September"
 duration: "1 to 2 hours"
 goodFor: "Families, sunset watchers, first-time visitors"
 readTime: "5 min read"
+hero: /images/jockeys-ridge-hang-gliding.jpg
+photo: /images/jockeys-ridge-hang-gliding.jpg
+photoAlt: "A student pilot kneeling beside a blue and white hang glider on the open sand at Jockey's Ridge"
+photoCaption: "Hang gliding on the dune at Jockey's Ridge. Photo by Watts, released to the public domain."
+map: true
+mapTown: "Nags Head"
 listing: sennah
 listingPhotoAlt: "Sennah's Shack in Kill Devil Hills, seen from the air"
 lede: "The tallest natural sand dune on the East Coast sits in the middle of Nags Head, free to walk into, and best an hour before sunset."
