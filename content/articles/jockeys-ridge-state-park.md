@@ -12,6 +12,9 @@ season: "Open year round. 8 a.m. to 9 p.m. May through September"
 duration: "1 to 2 hours"
 goodFor: "Families, sunset watchers, first-time visitors"
 readTime: "5 min read"
+listing: sennah
+listingPhotoAlt: "Sennah's Shack in Kill Devil Hills, seen from the air"
+lede: "The tallest natural sand dune on the East Coast sits in the middle of Nags Head, free to walk into, and best an hour before sunset."
 summary: "Jockey's Ridge State Park in Nags Head protects the tallest natural sand dune system in the eastern United States. Entry and parking are free. The park is open 8 a.m. to 9 p.m. from May through September, and the busiest hour is the one before sunset. Wear shoes, because summer sand can run 30 degrees hotter than the air."
 ctaText: "Jockey's Ridge is about a 10 minute drive from our places in Kill Devil Hills, and 15 from Kitty Hawk."
 faq:
