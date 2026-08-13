@@ -61,14 +61,17 @@
       }
       .hero .wrap { position: relative; }
       .hero h1 { color: #FCF8F4; }
-      .hero .kicker { color: #FFB3B3; }
-      .hero .byline { color: #F0E6DE; margin-bottom: 0; opacity: 0.9; }
-      .hero .crumb { color: #F0E6DE; opacity: 0.85; }
+      /* Lightened from the flat-navy values so they still clear 4.5:1 against the
+         brightest part of a photo hero. Measured, not guessed: see the contrast
+         sweep in the build notes before changing either the colours or the
+         overlay alpha above. */
+      .hero .kicker { color: #FFC9C9; }
+      .hero .byline { color: #F0E6DE; margin-bottom: 0; }
+      .hero .crumb { color: #F0E6DE; }
       .hero .crumb a { color: #F0E6DE; }
       .hero-lede { font-size: 1.15rem; color: #F0E6DE; margin: 0.75rem 0 0; max-width: 34em; }
 
       figure { margin: 2rem 0; }
-      figure.map img { border: 1px solid #F0E6DE; background: #FCF8F4; }
       figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
       figcaption { font-size: 14px; color: #6C6C62; margin-top: 0.5rem; }
 
@@ -160,7 +163,7 @@
         .brand { font-size: 1.05rem; }
       }
     </style>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Jockey's Ridge State Park: What to Know Before You Go","description":"Jockey's Ridge in Nags Head is the tallest natural sand dune on the East Coast, and it is free to visit. Hours, parking, sandboarding rules and the best time to climb.","datePublished":"2026-08-13","dateModified":"2026-08-13","author":{"@type":"Organization","name":"Jag Outer Banks Properties","url":"https://jagobxproperties.com"},"publisher":{"@type":"Organization","name":"Jag Outer Banks Properties","url":"https://jagobxproperties.com"},"mainEntityOfPage":"https://jagobxproperties.com/articles/jockeys-ridge-state-park/","image":"https://jagobxproperties.com/images/jockeys-ridge-hang-gliding.jpg","about":{"@type":"TouristAttraction","name":"Jockey's Ridge State Park","address":"300 W. Carolista Drive, Nags Head, NC 27959"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Jockey's Ridge State Park: What to Know Before You Go","description":"Jockey's Ridge in Nags Head is the tallest natural sand dune on the East Coast, and it is free to visit. Hours, parking, sandboarding rules and the best time to climb.","datePublished":"2026-08-13","dateModified":"2026-08-13","author":{"@type":"Organization","name":"Jag Outer Banks Properties","url":"https://jagobxproperties.com"},"publisher":{"@type":"Organization","name":"Jag Outer Banks Properties","url":"https://jagobxproperties.com"},"mainEntityOfPage":"https://jagobxproperties.com/articles/jockeys-ridge-state-park/","image":"https://jagobxproperties.com/images/jockeys-ridge-dune-field.jpg","about":{"@type":"TouristAttraction","name":"Jockey's Ridge State Park","address":"300 W. Carolista Drive, Nags Head, NC 27959"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://jagobxproperties.com/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://jagobxproperties.com/articles/"},{"@type":"ListItem","position":3,"name":"Jockey's Ridge State Park: What to Know Before You Go","item":"https://jagobxproperties.com/articles/jockeys-ridge-state-park/"}]}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"Jockey's Ridge State Park","description":"Jockey's Ridge in Nags Head is the tallest natural sand dune on the East Coast, and it is free to visit. Hours, parking, sandboarding rules and the best time to climb.","address":{"@type":"PostalAddress","streetAddress":"300 W. Carolista Drive, Nags Head, NC 27959","addressRegion":"NC","addressCountry":"US"},"isAccessibleForFree":true}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does it cost to visit Jockey's Ridge State Park?","acceptedAnswer":{"@type":"Answer","text":"Nothing. There is no entrance fee and no parking fee for day use. Fees apply only to picnic shelter reservations and a few special permits."}},{"@type":"Question","name":"What time does Jockey's Ridge close?","acceptedAnswer":{"@type":"Answer","text":"From May through September the park is open 8 a.m. to 9 p.m. It closes earlier the rest of the year: 8 p.m. in March and April, 7 p.m. in October, and 6 p.m. from November through February. The park is closed on Christmas Day."}},{"@type":"Question","name":"Can you sandboard at Jockey's Ridge?","acceptedAnswer":{"@type":"Answer","text":"Yes, and you do not need a permit. You do have to bring your own board, because the park does not rent them. Sandboards with foot bindings, boogie boards, skim boards, disc sleds and heavy cardboard are all allowed."}},{"@type":"Question","name":"Is Jockey's Ridge wheelchair accessible?","acceptedAnswer":{"@type":"Answer","text":"Partly. A 384 foot boardwalk runs from the visitor center out over the dune and is accessible. The dune itself is not, but the park can arrange an all terrain vehicle ride to the top for visitors with mobility limitations given 24 hours notice. Call (252) 441-7132."}},{"@type":"Question","name":"What is the best time of day to visit Jockey's Ridge?","acceptedAnswer":{"@type":"Answer","text":"Late afternoon into sunset. The sand is cooler, the light is better, and the dune faces west over Roanoke Sound. Mid-day in summer is the least pleasant time to climb it."}}]}</script>
@@ -176,7 +179,7 @@
         </nav>
       </div>
     </header>
-    <div class="hero on-dark" style="background-image: linear-gradient(rgba(20,22,26,0.72), rgba(20,22,26,0.86)), url('/images/jockeys-ridge-hang-gliding.jpg')">
+    <div class="hero on-dark" style="background-image: linear-gradient(rgba(20,22,26,0.66), rgba(20,22,26,0.80)), url('/images/jockeys-ridge-dune-field.jpg')">
       <div class="wrap">
         <p class="crumb"><a href="/">Home</a> / <a href="/articles/">Articles</a></p>
         <p class="kicker">Nags Head</p>
@@ -196,7 +199,7 @@
   <div><dt>Good for</dt><dd>Families, sunset watchers, first-time visitors</dd></div>
   <div><dt>Address</dt><dd>300 W. Carolista Drive, Nags Head, NC 27959</dd></div>
 </dl>
-        <figure><img src="/images/jockeys-ridge-hang-gliding.jpg" alt="A student pilot kneeling beside a blue and white hang glider on the open sand at Jockey's Ridge" width="1016" height="675" loading="lazy" /><figcaption>Hang gliding on the dune at Jockey's Ridge. Photo by Watts, released to the public domain.</figcaption></figure>
+        <figure><img src="/images/jockeys-ridge-hang-gliding.jpg" alt="A student pilot kneeling beside a blue and white hang glider on the open sand at Jockey's Ridge" width="1016" height="675" loading="lazy" /><figcaption>Hang gliding on the dune. Photo by Watts, public domain.</figcaption></figure>
 <p>There is a moment climbing Jockey&#39;s Ridge where the parking lot disappears behind
 you and there is nothing in any direction but sand. It is briefly disorienting.
 Then you reach the top and the whole barrier island lays out at once, ocean on
@@ -213,6 +216,7 @@ somewhere between 80 and 100 feet depending on the year and where you measure.</
 local resident named Carolista Baum, who in 1973 reportedly stood in front of a
 bulldozer sent to level the dune for development. The entrance road carries her
 name now.</p>
+<figure><img src="/images/jockeys-ridge-living-dune.jpg" alt="Open sand and low scrub spreading across the dune field at Jockey&#39;s Ridge" width="1200" height="555" loading="lazy" decoding="async" /><figcaption>The dune is not anchored by vegetation, so the whole system moves. Photo by Bohemian Baltimore, CC BY-SA 4.0.</figcaption></figure>
 <h2>Climbing it</h2>
 <p>There is no trail up the main dune and you do not need one. You pick a line and
 walk. It is harder than it looks, because sand takes back part of every step, but
@@ -225,6 +229,7 @@ It is the same reason to think twice about bringing a dog mid-day. The park
 specifically recommends paw protection.</p>
 <p>Carry water, because there is no shade anywhere on the dune, and a bag for your
 phone. Fine sand gets into everything.</p>
+<figure><img src="/images/jockeys-ridge-climb.jpg" alt="A line of footprints running up a long open slope of sand toward the ridge" width="1200" height="555" loading="lazy" decoding="async" /><figcaption>There is no trail. You pick a line and walk. Photo by Bohemian Baltimore, CC BY-SA 4.0.</figcaption></figure>
 <h2>Sunset is the reason to come</h2>
 <p>The dune faces west across Roanoke Sound with an uninterrupted horizon. On a
 clear evening it is one of the best places to watch the sun go down on the Outer
@@ -234,6 +239,7 @@ everyone waiting on the same thing.</p>
 open until 9 p.m. from May through September, late enough to watch the sky finish
 and still walk down in usable light. Bring a small flashlight if you plan to
 linger past that.</p>
+<figure><img src="/images/jockeys-ridge-sunset.jpg" alt="An orange and gold sky over the dark treeline and dune grass at dusk" width="1200" height="555" loading="lazy" decoding="async" /><figcaption>The dune faces west across Roanoke Sound. Photo by chucka_nc, CC BY-SA 3.0.</figcaption></figure>
 <h2>Flying things</h2>
 <p>Steady ocean wind hits an enormous obstacle-free slope here, which makes it one
 of the better kite spots on the East Coast. Any kite works. Kitty Hawk Kites has
@@ -242,11 +248,13 @@ sat across the road for decades and will sell you one.</p>
 through a concession agreement with the park. Soft sand is why beginners can
 learn here safely. If you are already a rated pilot flying your own wing, you
 need a permit from the park office, and it is free.</p>
+<figure><img src="/images/jockeys-ridge-kites.jpg" alt="Large novelty kites shaped like an octopus and a crab flying above people on the dune" width="1200" height="555" loading="lazy" decoding="async" /><figcaption>Steady ocean wind and an obstacle free slope make this one of the better kite spots on the East Coast. Photo by Doubleduhgirls, CC BY-SA 3.0.</figcaption></figure>
 <h2>Sandboarding</h2>
 <p>Allowed, no permit needed, but bring your own board. The park does not rent
 equipment. Boards with foot bindings work best, though boogie boards, skim
 boards, disc sleds and heavy cardboard are all permitted. Expect it to be slower
 than snowboarding. The appeal is the rhythm of climbing and sliding, not speed.</p>
+<figure><img src="/images/jockeys-ridge-slope.jpg" alt="A wide slope of open sand falling away toward the ocean and a line of beach houses" width="1200" height="555" loading="lazy" decoding="async" /><figcaption>Plenty of slope, and a soft landing. Photo by Bohemian Baltimore, CC BY-SA 4.0.</figcaption></figure>
 <h2>The sound side is a different park</h2>
 <p>Most visitors never see it. A separate entrance at 330 W. Soundside Road opens
 onto the Roanoke Sound shoreline, where the water is shallow, warm and calm, the
@@ -254,6 +262,7 @@ opposite of the ocean side. It is the better choice with small children, and it
 is where kiteboarders and windsurfers launch.</p>
 <p>Watch the hours, which differ. Soundside access closes at 7 p.m. from April
 through September, two hours before the main park.</p>
+<figure><img src="/images/jockeys-ridge-sound-side.jpg" alt="The crest of the dune with the flat blue water of Roanoke Sound stretching out behind it" width="1200" height="555" loading="lazy" decoding="async" /><figcaption>Roanoke Sound from the top of the ridge, shallow and calm compared to the ocean side. Photo by Bohemian Baltimore, CC BY-SA 4.0.</figcaption></figure>
 <h2>Practical notes</h2>
 <p>The visitor center holds a small museum on dune ecology and the 384 foot
 boardwalk out over the sand. It keeps shorter hours than the park itself, around
@@ -264,8 +273,8 @@ bringing a kite or a board, or staying for the sunset.</p>
 <p>Hours and rules shift with the season, so it is worth checking the
 <a href="https://www.ncparks.gov/state-parks/jockeys-ridge-state-park">official NC State Parks page</a>
 before you drive over.</p>
+<figure><img src="/images/jockeys-ridge-park-sign.jpg" alt="A brown highway sign reading Jockeys Ridge State Park with a second panel reading Hang Gliding School" width="1200" height="555" loading="lazy" decoding="async" /><figcaption>The turn off US 158 in Nags Head. Photo by Ken Lund, CC BY-SA 2.0.</figcaption></figure>
 
-        <figure class="map"><img src="/images/map-jockeys-ridge-state-park.svg" alt="Diagram of the Outer Banks from Corolla to Nags Head showing where Jockey's Ridge State Park sits relative to our rental properties" width="720" height="340" loading="lazy" /></figure>
         <h2>Common questions</h2>
 <h3>How much does it cost to visit Jockey's Ridge State Park?</h3>
 <p>Nothing. There is no entrance fee and no parking fee for day use. Fees apply only to picnic shelter reservations and a few special permits.</p>

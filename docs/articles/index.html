@@ -61,14 +61,17 @@
       }
       .hero .wrap { position: relative; }
       .hero h1 { color: #FCF8F4; }
-      .hero .kicker { color: #FFB3B3; }
-      .hero .byline { color: #F0E6DE; margin-bottom: 0; opacity: 0.9; }
-      .hero .crumb { color: #F0E6DE; opacity: 0.85; }
+      /* Lightened from the flat-navy values so they still clear 4.5:1 against the
+         brightest part of a photo hero. Measured, not guessed: see the contrast
+         sweep in the build notes before changing either the colours or the
+         overlay alpha above. */
+      .hero .kicker { color: #FFC9C9; }
+      .hero .byline { color: #F0E6DE; margin-bottom: 0; }
+      .hero .crumb { color: #F0E6DE; }
       .hero .crumb a { color: #F0E6DE; }
       .hero-lede { font-size: 1.15rem; color: #F0E6DE; margin: 0.75rem 0 0; max-width: 34em; }
 
       figure { margin: 2rem 0; }
-      figure.map img { border: 1px solid #F0E6DE; background: #FCF8F4; }
       figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
       figcaption { font-size: 14px; color: #6C6C62; margin-top: 0.5rem; }
 
@@ -185,7 +188,7 @@
       <div class="wrap">
         <ul class="card-list">
           <li>
-            <a class="card-thumb" href="/articles/jockeys-ridge-state-park/" tabindex="-1" aria-hidden="true"><img src="/images/jockeys-ridge-hang-gliding.jpg" width="1016" height="675" alt="" loading="lazy" /></a>
+            <a class="card-thumb" href="/articles/jockeys-ridge-state-park/" tabindex="-1" aria-hidden="true"><img src="/images/jockeys-ridge-dune-field.jpg" width="1200" height="555" alt="" loading="lazy" /></a>
             <div class="card-body">
               <a href="/articles/jockeys-ridge-state-park/">
                 <h2>Jockey's Ridge State Park: What to Know Before You Go</h2>
