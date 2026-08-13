@@ -484,6 +484,9 @@ function NavBar({ page, setPage }) {
               {p}
             </button>
           ))}
+          <a className="nav-link" href="/articles/" style={{ color: C.foam, textDecoration: "none" }}>
+            articles
+          </a>
         </nav>
 
         <button
@@ -517,6 +520,16 @@ function NavBar({ page, setPage }) {
               {p}
             </button>
           ))}
+          <a
+            href="/articles/"
+            style={{
+              color: C.foam, fontFamily: "inherit", fontSize: 17, textDecoration: "none",
+              textTransform: "capitalize", padding: "0.85rem 0",
+              borderBottom: "1px solid rgba(247,244,236,0.12)",
+            }}
+          >
+            articles
+          </a>
         </nav>
       )}
     </header>
@@ -564,6 +577,9 @@ function Hero({ setPage }) {
           <button className="btn btn-coral" onClick={() => setPage("listings")}>
             Browse properties <ChevronRight size={16} aria-hidden="true" />
           </button>
+          <a className="btn btn-ghost" href="/articles/">
+            Things to do
+          </a>
         </div>
       </div>
     </div>
@@ -942,6 +958,12 @@ function Footer({ setPage }) {
               {p}
             </button>
           ))}
+          <a
+            href="/articles/"
+            style={{ color: C.sand, fontFamily: "inherit", fontSize: 14, textTransform: "capitalize", textDecoration: "none" }}
+          >
+            articles
+          </a>
         </nav>
       </div>
       <p style={{ textAlign: "center", fontSize: 12, color: "#9c858d", marginTop: "2rem", padding: "0 1.25rem" }}>
