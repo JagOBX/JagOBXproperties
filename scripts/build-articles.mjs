@@ -9,7 +9,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { marked } from "marked";
-import { locatorMap } from "./locator-map.mjs";
 
 const ROOT = process.cwd();
 const SRC = path.join(ROOT, "content", "articles");
@@ -144,14 +143,17 @@ function layout({ title, description, canonical, schema, body, hero }) {
       }
       .hero .wrap { position: relative; }
       .hero h1 { color: ${C.foam}; }
-      .hero .kicker { color: #FFB3B3; }
-      .hero .byline { color: ${C.sand}; margin-bottom: 0; opacity: 0.9; }
-      .hero .crumb { color: ${C.sand}; opacity: 0.85; }
+      /* Lightened from the flat-navy values so they still clear 4.5:1 against the
+         brightest part of a photo hero. Measured, not guessed: see the contrast
+         sweep in the build notes before changing either the colours or the
+         overlay alpha above. */
+      .hero .kicker { color: #FFC9C9; }
+      .hero .byline { color: ${C.sand}; margin-bottom: 0; }
+      .hero .crumb { color: ${C.sand}; }
       .hero .crumb a { color: ${C.sand}; }
       .hero-lede { font-size: 1.15rem; color: ${C.sand}; margin: 0.75rem 0 0; max-width: 34em; }
 
       figure { margin: 2rem 0; }
-      figure.map img { border: 1px solid ${C.sand}; background: ${C.foam}; }
       figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
       figcaption { font-size: 14px; color: ${C.meta}; margin-top: 0.5rem; }
 
@@ -321,6 +323,56 @@ function checkStyle(file, raw) {
   }
 }
 
+// House rule: every section of an article carries a picture. A wall of text with
+// one photo at the top reads as filler, so the build refuses to publish an
+// article where a heading is followed by prose and nothing else. Write the image
+// into the Markdown itself, at the end of the section it belongs to:
+//
+//   ![Someone climbing the dune](/images/climb.jpg "Photo by Name, CC BY-SA 4.0")
+//
+// The title text becomes the caption, which is also where the credit goes.
+function checkSectionImages(file, body, hasLeadPhoto) {
+  const lines = body.split("\n");
+  const sections = [];
+  let current = { heading: "(intro)", line: 1, text: [] };
+  lines.forEach((line, i) => {
+    if (/^##\s+/.test(line)) {
+      sections.push(current);
+      current = { heading: line.replace(/^##\s+/, "").trim(), line: i + 1, text: [] };
+    } else {
+      current.text.push(line);
+    }
+  });
+  sections.push(current);
+
+  // The intro is exempt when the front matter already puts a photo above it.
+  const bare = sections.filter(
+    (s, i) =>
+      !(i === 0 && hasLeadPhoto) &&
+      s.text.join("\n").trim() &&
+      !/!\[[^\]]*\]\([^)]+\)/.test(s.text.join("\n"))
+  );
+  if (bare.length) {
+    throw new Error(
+      `${file} has sections with no image. Every section needs one, written as ` +
+        `![alt text](/images/file.jpg "Caption. Photo by Name, licence.")\n  ` +
+        bare.map((s) => `line ${s.line}: ${s.heading}`).join("\n  ")
+    );
+  }
+}
+
+// marked renders a lone image as <p><img></p>. Promote those to real figures so
+// the caption shows, the credit is visible, and the box is reserved before the
+// image loads.
+function figurise(html) {
+  return html.replace(
+    /<p>\s*<img src="([^"]+)" alt="([^"]*)"(?: title="([^"]*)")?\s*\/?>\s*<\/p>/g,
+    (_, src, alt, title) =>
+      `<figure><img src="${src}" alt="${alt}"${sizeAttrs(src)} loading="lazy" decoding="async" />` +
+      (title ? `<figcaption>${title}</figcaption>` : "") +
+      `</figure>`
+  );
+}
 
 // The property photos already live inside src/App.jsx as data URLs. Rather than
 // duplicating them in the repo, pull each listing's cover shot out at build time
@@ -407,6 +459,7 @@ function buildArticle(file, listingPhotos = {}, listings = []) {
   const raw = fs.readFileSync(path.join(SRC, file), "utf8");
   checkStyle(file, raw);
   const { data, body } = parseFrontMatter(raw);
+  checkSectionImages(file, body, Boolean(data.photo));
   const slug = data.slug || file.replace(/\.md$/, "");
   const url = `${SITE}/articles/${slug}/`;
 
@@ -491,7 +544,7 @@ function buildArticle(file, listingPhotos = {}, listings = []) {
 
   // A photo makes the hero; without one the brand colour carries it.
   const heroStyle = data.hero
-    ? ` style="background-image: linear-gradient(rgba(20,22,26,0.72), rgba(20,22,26,0.86)), url('${esc(data.hero)}')"`
+    ? ` style="background-image: linear-gradient(rgba(20,22,26,0.66), rgba(20,22,26,0.80)), url('${esc(data.hero)}')"`
     : "";
   const heroBand = `<div class="hero on-dark"${heroStyle}>
       <div class="wrap">
@@ -511,24 +564,6 @@ function buildArticle(file, listingPhotos = {}, listings = []) {
       }</figure>`
     : "";
 
-  // A diagram rather than a photograph, so nothing in it can be subtly wrong the
-  // way a generated image of a real place can be. Written to docs/images at build
-  // time and referenced as a file, so it caches like any other image.
-  let mapFigure = "";
-  if (data.map && (data.mapTown || data.kicker)) {
-    const svg = locatorMap({
-      attraction: data.attraction || data.title,
-      town: data.mapTown || data.kicker,
-      properties: listings,
-    });
-    const dir = path.join(OUT, "images");
-    fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, `map-${slug}.svg`), svg);
-    mapFigure = `<figure class="map"><img src="/images/map-${slug}.svg" alt="Diagram of the Outer Banks from Corolla to Nags Head showing where ${esc(
-      data.attraction || data.title
-    )} sits relative to our rental properties" width="720" height="340" loading="lazy" /></figure>`;
-  }
-
   const html = layout({
     title: data.title,
     description: data.description,
@@ -538,8 +573,7 @@ function buildArticle(file, listingPhotos = {}, listings = []) {
     body: `        ${data.summary ? `<div class="summary"><h2>In short</h2><p>${esc(data.summary)}</p></div>` : ""}
         ${glance(data)}
         ${figure}
-${marked.parse(body)}
-        ${mapFigure}
+${figurise(marked.parse(body))}
         ${faqHtml}
         ${cta}`,
   });
