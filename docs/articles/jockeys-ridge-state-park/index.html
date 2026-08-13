@@ -68,6 +68,7 @@
       .hero-lede { font-size: 1.15rem; color: #F0E6DE; margin: 0.75rem 0 0; max-width: 34em; }
 
       figure { margin: 2rem 0; }
+      figure.map img { border: 1px solid #F0E6DE; background: #FCF8F4; }
       figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
       figcaption { font-size: 14px; color: #6C6C62; margin-top: 0.5rem; }
 
@@ -133,11 +134,19 @@
       .btn:hover { background: #085961; }
 
       .card-list { list-style: none; padding: 0; margin: 2rem 0 0; }
-      .card-list li { border-top: 1px solid #F0E6DE; padding: 1.25rem 0; margin: 0; }
+      .card-list li { border-top: 1px solid #F0E6DE; padding: 1.25rem 0; margin: 0;
+        display: grid; grid-template-columns: 200px 1fr; gap: 1.25rem; align-items: start; }
+      .card-list li.no-thumb { grid-template-columns: 1fr; }
+      .card-thumb { display: block; border-radius: 6px; overflow: hidden; }
+      .card-thumb img { display: block; width: 100%; height: 130px; object-fit: cover; }
       .card-list h2 { margin: 0 0 0.3rem; }
       .card-list a { text-decoration: none; }
       .card-list a:hover h2 { text-decoration: underline; }
       .card-list p { margin: 0.25rem 0 0; color: #615A5D; font-size: 15px; }
+      @media (max-width: 620px) {
+        .card-list li { grid-template-columns: 1fr; gap: 0.85rem; }
+        .card-thumb img { height: 180px; }
+      }
 
       footer.site { background: #131216; color: #F0E6DE; padding: 2.5rem 0; margin-top: 3rem; }
       footer.site a { color: #0FA3B1; }
@@ -256,6 +265,7 @@ bringing a kite or a board, or staying for the sunset.</p>
 <a href="https://www.ncparks.gov/state-parks/jockeys-ridge-state-park">official NC State Parks page</a>
 before you drive over.</p>
 
+        
         <h2>Common questions</h2>
 <h3>How much does it cost to visit Jockey's Ridge State Park?</h3>
 <p>Nothing. There is no entrance fee and no parking fee for day use. Fees apply only to picnic shelter reservations and a few special permits.</p>
