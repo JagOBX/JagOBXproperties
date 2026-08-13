@@ -157,12 +157,20 @@ function layout({ title, description, canonical, schema, body, hero }) {
       figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
       figcaption { font-size: 14px; color: ${C.meta}; margin-top: 0.5rem; }
 
-      .glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px;
-        background: ${C.sand}; border: 1px solid ${C.sand}; border-radius: 6px; overflow: hidden; margin: 0 0 2.5rem; }
-      .glance div { background: ${C.foam}; padding: 0.9rem 1rem; }
-      .glance dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em;
-        text-transform: uppercase; color: ${C.meta}; margin: 0 0 0.25rem; }
-      .glance dd { margin: 0; font-size: 15px; font-weight: 500; line-height: 1.45; }
+      .glance { margin: 0 0 2.5rem; border-top: 2px solid ${C.ink}; }
+      .glance div {
+        display: flex; gap: 1.25rem; align-items: baseline;
+        padding: 0.7rem 0; border-bottom: 1px solid ${C.sand};
+      }
+      .glance dt {
+        flex: 0 0 7rem; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+        letter-spacing: 0.08em; text-transform: uppercase; color: ${C.meta}; margin: 0;
+      }
+      .glance dd { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.5; }
+      @media (max-width: 480px) {
+        .glance div { display: block; padding: 0.65rem 0; }
+        .glance dt { margin-bottom: 0.15rem; }
+      }
 
       .property { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
       .property img { width: 190px; height: 130px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
@@ -276,6 +284,10 @@ ${body}
 `;
 }
 
+// The facts box under the summary. A single column of labelled rows rather than a
+// tiled grid: the grid left an empty cell whenever the fact count was odd, which
+// read as a blank panel, and values like the address and the season never fitted
+// a narrow column anyway.
 function glance(d) {
   const rows = [
     ["Where", d.location],
