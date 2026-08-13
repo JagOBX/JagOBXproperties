@@ -51,7 +51,36 @@
       header.site nav a { color: #FCF8F4; text-decoration: none; font-size: 14px; }
       header.site nav a:hover { text-decoration: underline; }
 
-      main { padding: 2.5rem 0 3.5rem; }
+      main { padding: 0 0 3.5rem; }
+
+      /* Hero band. Uses the article photo when there is one, brand colour when
+         there is not, so a photo-less article still looks deliberate. */
+      .hero {
+        background: #1C1B20; color: #FCF8F4; padding: 3rem 0 2.5rem; margin-bottom: 2.5rem;
+        background-size: cover; background-position: center;
+      }
+      .hero .wrap { position: relative; }
+      .hero h1 { color: #FCF8F4; }
+      .hero .kicker { color: #FFB3B3; }
+      .hero .byline { color: #F0E6DE; margin-bottom: 0; opacity: 0.9; }
+      .hero .crumb { color: #F0E6DE; opacity: 0.85; }
+      .hero .crumb a { color: #F0E6DE; }
+      .hero-lede { font-size: 1.15rem; color: #F0E6DE; margin: 0.75rem 0 0; max-width: 34em; }
+
+      figure { margin: 2rem 0; }
+      figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
+      figcaption { font-size: 14px; color: #6C6C62; margin-top: 0.5rem; }
+
+      .glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px;
+        background: #F0E6DE; border: 1px solid #F0E6DE; border-radius: 6px; overflow: hidden; margin: 0 0 2.5rem; }
+      .glance div { background: #FCF8F4; padding: 0.9rem 1rem; }
+      .glance dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em;
+        text-transform: uppercase; color: #6C6C62; margin: 0 0 0.25rem; }
+      .glance dd { margin: 0; font-size: 15px; font-weight: 500; line-height: 1.45; }
+
+      .property { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
+      .property img { width: 190px; height: 130px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+      .property-body { flex: 1; min-width: 220px; }
       .crumb {
         font-family: 'JetBrains Mono', monospace; font-size: 12px;
         letter-spacing: 0.06em; color: #6C6C62; margin: 0 0 1rem;
@@ -135,12 +164,16 @@
         </nav>
       </div>
     </header>
-    <main id="main-content" tabindex="-1">
+    <div class="hero on-dark">
       <div class="wrap">
         <p class="crumb"><a href="/">Home</a> / Articles</p>
         <p class="kicker">Guides</p>
         <h1>Things to do on the Outer Banks</h1>
-        <p>Straight guides to the attractions worth your time between Corolla and Nags Head — what they cost, when to go, and what to expect when you get there.</p>
+        <p class="hero-lede">Straight guides to the attractions worth your time between Corolla and Nags Head: what they cost, when to go, and what to expect when you get there.</p>
+      </div>
+    </div>
+    <main id="main-content" tabindex="-1">
+      <div class="wrap">
         <ul class="card-list">
           <li>
             <a href="/articles/jockeys-ridge-state-park/">
