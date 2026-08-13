@@ -1,13 +1,16 @@
 name: Build and publish site
 
-# Builds src/App.jsx into docs/ and commits the result. GitHub Pages is set to
+# Builds the site into docs/ and commits the result. GitHub Pages is set to
 # serve this repo from the docs/ folder on main, so committing there publishes.
+#
+# Article pages build on their own, so a new article publishes even if the
+# React app is not present yet.
 on:
   push:
     branches: [main]
     paths-ignore:
       - "docs/**"
-      - "**.md"
+      - "README.md"
   workflow_dispatch:
 
 permissions:
@@ -23,9 +26,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Nothing to build until the website script has been added. Exiting
-      # cleanly here keeps the live site untouched instead of publishing a
-      # broken build.
       - name: Check for the website script
         id: check
         run: |
@@ -33,28 +33,28 @@ jobs:
             echo "found=true" >> "$GITHUB_OUTPUT"
           else
             echo "found=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::src/App.jsx not found - skipping the build. Add the website script to src/App.jsx."
+            echo "::notice::src/App.jsx not found, so only the article pages will be built."
           fi
 
       - uses: actions/setup-node@v4
-        if: steps.check.outputs.found == 'true'
         with:
           node-version: 20
 
       - name: Install dependencies
-        if: steps.check.outputs.found == 'true'
         run: npm install
 
-      - name: Remove the previous bundle
+      # Only the React app depends on src/App.jsx. Skipping this step leaves the
+      # existing bundle in docs/ untouched rather than publishing a broken site.
+      - name: Build the app
         if: steps.check.outputs.found == 'true'
-        run: rm -f docs/assets/index-*.js
+        run: |
+          rm -f docs/assets/index-*.js
+          npx vite build
 
-      - name: Build
-        if: steps.check.outputs.found == 'true'
-        run: npm run build
+      - name: Build the article pages
+        run: npm run build:articles
 
       - name: Commit the built site
-        if: steps.check.outputs.found == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -65,4 +65,3 @@ jobs:
             git commit -m "Build site [skip ci]"
             git push
           fi
-
