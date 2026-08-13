@@ -9,6 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { marked } from "marked";
+import { locatorMap } from "./locator-map.mjs";
 
 const ROOT = process.cwd();
 const SRC = path.join(ROOT, "content", "articles");
@@ -150,6 +151,7 @@ function layout({ title, description, canonical, schema, body, hero }) {
       .hero-lede { font-size: 1.15rem; color: ${C.sand}; margin: 0.75rem 0 0; max-width: 34em; }
 
       figure { margin: 2rem 0; }
+      figure.map img { border: 1px solid ${C.sand}; background: ${C.foam}; }
       figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
       figcaption { font-size: 14px; color: ${C.meta}; margin-top: 0.5rem; }
 
@@ -215,11 +217,19 @@ function layout({ title, description, canonical, schema, body, hero }) {
       .btn:hover { background: ${C.coralDark}; }
 
       .card-list { list-style: none; padding: 0; margin: 2rem 0 0; }
-      .card-list li { border-top: 1px solid ${C.sand}; padding: 1.25rem 0; margin: 0; }
+      .card-list li { border-top: 1px solid ${C.sand}; padding: 1.25rem 0; margin: 0;
+        display: grid; grid-template-columns: 200px 1fr; gap: 1.25rem; align-items: start; }
+      .card-list li.no-thumb { grid-template-columns: 1fr; }
+      .card-thumb { display: block; border-radius: 6px; overflow: hidden; }
+      .card-thumb img { display: block; width: 100%; height: 130px; object-fit: cover; }
       .card-list h2 { margin: 0 0 0.3rem; }
       .card-list a { text-decoration: none; }
       .card-list a:hover h2 { text-decoration: underline; }
       .card-list p { margin: 0.25rem 0 0; color: ${C.slate}; font-size: 15px; }
+      @media (max-width: 620px) {
+        .card-list li { grid-template-columns: 1fr; gap: 0.85rem; }
+        .card-thumb img { height: 180px; }
+      }
 
       footer.site { background: ${C.navyDeep}; color: ${C.sand}; padding: 2.5rem 0; margin-top: 3rem; }
       footer.site a { color: ${C.tealOnDark}; }
@@ -311,6 +321,7 @@ function checkStyle(file, raw) {
   }
 }
 
+
 // The property photos already live inside src/App.jsx as data URLs. Rather than
 // duplicating them in the repo, pull each listing's cover shot out at build time
 // and write it as a real image file, so article pages can show a photo of the
@@ -342,7 +353,57 @@ function extractListingPhotos() {
   return out;
 }
 
-function buildArticle(file, listingPhotos = {}) {
+// Intrinsic pixel size of an image in content/images, read straight from the
+// file header. Lazy-loaded images with no width and height collapse to zero
+// height until they load, which both shifts the layout and can hide them
+// entirely, so every <img> this script writes gets real dimensions.
+function imageSize(webPath) {
+  const file = path.join(ROOT, "content", "images", path.basename(webPath || ""));
+  if (!webPath || !fs.existsSync(file)) return null;
+  const buf = fs.readFileSync(file);
+  if (buf.slice(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+    return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+  }
+  if (buf[0] === 0xff && buf[1] === 0xd8) {
+    let i = 2;
+    while (i < buf.length - 9) {
+      if (buf[i] !== 0xff) { i += 1; continue; }
+      const marker = buf[i + 1];
+      // SOF0..SOF15, skipping the four that are not frame headers.
+      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc, 0xd8].includes(marker)) {
+        return { h: buf.readUInt16BE(i + 5), w: buf.readUInt16BE(i + 7) };
+      }
+      i += 2 + buf.readUInt16BE(i + 2);
+    }
+    return null;
+  }
+  const head = buf.slice(0, 400).toString("utf8");
+  const w = head.match(/\bwidth="(\d+)"/);
+  const h = head.match(/\bheight="(\d+)"/);
+  return w && h ? { w: Number(w[1]), h: Number(h[1]) } : null;
+}
+
+const sizeAttrs = (webPath) => {
+  const s = imageSize(webPath);
+  return s ? ` width="${s.w}" height="${s.h}"` : "";
+};
+
+// Names and towns for the locator map. Read from the same source of truth as the
+// photos so a new property shows up on every article map without a second edit.
+function extractListings() {
+  const appPath = path.join(ROOT, "src", "App.jsx");
+  if (!fs.existsSync(appPath)) return [];
+  const src = fs.readFileSync(appPath, "utf8");
+  const re = /id:\s*"([\w-]+)",\s*\n\s*name:\s*"([^"]+)",\s*\n\s*location:\s*"([^"]+)"/g;
+  const out = [];
+  let m;
+  while ((m = re.exec(src))) {
+    out.push({ id: m[1], name: m[2], town: m[3].replace(/,\s*[A-Z]{2}\s*$/, "").trim() });
+  }
+  return out;
+}
+
+function buildArticle(file, listingPhotos = {}, listings = []) {
   const raw = fs.readFileSync(path.join(SRC, file), "utf8");
   checkStyle(file, raw);
   const { data, body } = parseFrontMatter(raw);
@@ -445,10 +506,28 @@ function buildArticle(file, listingPhotos = {}) {
     </div>`;
 
   const figure = data.photo
-    ? `<figure><img src="${esc(data.photo)}" alt="${esc(data.photoAlt || data.attraction || data.title)}" loading="lazy" />${
+    ? `<figure><img src="${esc(data.photo)}" alt="${esc(data.photoAlt || data.attraction || data.title)}"${sizeAttrs(data.photo)} loading="lazy" />${
         data.photoCaption ? `<figcaption>${esc(data.photoCaption)}</figcaption>` : ""
       }</figure>`
     : "";
+
+  // A diagram rather than a photograph, so nothing in it can be subtly wrong the
+  // way a generated image of a real place can be. Written to docs/images at build
+  // time and referenced as a file, so it caches like any other image.
+  let mapFigure = "";
+  if (data.map && (data.mapTown || data.kicker)) {
+    const svg = locatorMap({
+      attraction: data.attraction || data.title,
+      town: data.mapTown || data.kicker,
+      properties: listings,
+    });
+    const dir = path.join(OUT, "images");
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, `map-${slug}.svg`), svg);
+    mapFigure = `<figure class="map"><img src="/images/map-${slug}.svg" alt="Diagram of the Outer Banks from Corolla to Nags Head showing where ${esc(
+      data.attraction || data.title
+    )} sits relative to our rental properties" width="720" height="340" loading="lazy" /></figure>`;
+  }
 
   const html = layout({
     title: data.title,
@@ -460,6 +539,7 @@ function buildArticle(file, listingPhotos = {}) {
         ${glance(data)}
         ${figure}
 ${marked.parse(body)}
+        ${mapFigure}
         ${faqHtml}
         ${cta}`,
   });
@@ -481,11 +561,20 @@ function buildIndex(articles) {
     .slice()
     .sort((a, b) => String(b.date).localeCompare(String(a.date)))
     .map(
-      (a) => `          <li>
-            <a href="/articles/${a.slug}/">
-              <h2>${esc(a.title)}</h2>
-            </a>
-            <p>${esc(a.description)}</p>
+      (a) => `          <li${a.hero || a.photo ? "" : ' class="no-thumb"'}>
+            ${
+              a.hero || a.photo
+                ? `<a class="card-thumb" href="/articles/${a.slug}/" tabindex="-1" aria-hidden="true"><img src="${esc(
+                    a.hero || a.photo
+                  )}"${sizeAttrs(a.hero || a.photo)} alt="" loading="lazy" /></a>`
+                : ""
+            }
+            <div class="card-body">
+              <a href="/articles/${a.slug}/">
+                <h2>${esc(a.title)}</h2>
+              </a>
+              <p>${esc(a.description)}</p>
+            </div>
           </li>`
     )
     .join("\n");
@@ -493,7 +582,7 @@ function buildIndex(articles) {
   const html = layout({
     title: `Outer Banks Guides & Attractions | ${BRAND}`,
     description:
-      "Guides to Outer Banks attractions, beaches and things to do, from Corolla to Nags Head — written for people planning a trip.",
+      "Guides to Outer Banks attractions, beaches and things to do, from Corolla to Nags Head, written for people planning a trip.",
     canonical: `${SITE}/articles/`,
     hero: `<div class="hero on-dark">
       <div class="wrap">
@@ -513,7 +602,7 @@ function buildIndex(articles) {
       },
     ],
     body: `        <ul class="card-list">
-${items || "          <li><p>New guides are on the way.</p></li>"}
+${items || '          <li class="no-thumb"><p>New guides are on the way.</p></li>'}
         </ul>`,
   });
 
@@ -579,8 +668,9 @@ function main() {
   }
   const files = fs.readdirSync(SRC).filter((f) => f.endsWith(".md"));
   const listingPhotos = extractListingPhotos();
+  const listings = extractListings();
   copyImages();
-  const articles = files.map((f) => buildArticle(f, listingPhotos));
+  const articles = files.map((f) => buildArticle(f, listingPhotos, listings));
   buildIndex(articles);
   buildSitemap(articles);
   buildLlmsTxt(articles);
