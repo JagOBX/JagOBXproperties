@@ -12,12 +12,10 @@ season: "Open year round. 8 a.m. to 9 p.m. May through September"
 duration: "1 to 2 hours"
 goodFor: "Families, sunset watchers, first-time visitors"
 readTime: "5 min read"
-hero: /images/jockeys-ridge-hang-gliding.jpg
+hero: /images/jockeys-ridge-dune-field.jpg
 photo: /images/jockeys-ridge-hang-gliding.jpg
 photoAlt: "A student pilot kneeling beside a blue and white hang glider on the open sand at Jockey's Ridge"
-photoCaption: "Hang gliding on the dune at Jockey's Ridge. Photo by Watts, released to the public domain."
-map: true
-mapTown: "Nags Head"
+photoCaption: "Hang gliding on the dune. Photo by Watts, public domain."
 listing: sennah
 listingPhotoAlt: "Sennah's Shack in Kill Devil Hills, seen from the air"
 lede: "The tallest natural sand dune on the East Coast sits in the middle of Nags Head, free to walk into, and best an hour before sunset."
@@ -57,6 +55,8 @@ local resident named Carolista Baum, who in 1973 reportedly stood in front of a
 bulldozer sent to level the dune for development. The entrance road carries her
 name now.
 
+![Open sand and low scrub spreading across the dune field at Jockey's Ridge](/images/jockeys-ridge-living-dune.jpg "The dune is not anchored by vegetation, so the whole system moves. Photo by Bohemian Baltimore, CC BY-SA 4.0.")
+
 ## Climbing it
 
 There is no trail up the main dune and you do not need one. You pick a line and
@@ -73,6 +73,8 @@ specifically recommends paw protection.
 Carry water, because there is no shade anywhere on the dune, and a bag for your
 phone. Fine sand gets into everything.
 
+![A line of footprints running up a long open slope of sand toward the ridge](/images/jockeys-ridge-climb.jpg "There is no trail. You pick a line and walk. Photo by Bohemian Baltimore, CC BY-SA 4.0.")
+
 ## Sunset is the reason to come
 
 The dune faces west across Roanoke Sound with an uninterrupted horizon. On a
@@ -85,6 +87,8 @@ open until 9 p.m. from May through September, late enough to watch the sky finis
 and still walk down in usable light. Bring a small flashlight if you plan to
 linger past that.
 
+![An orange and gold sky over the dark treeline and dune grass at dusk](/images/jockeys-ridge-sunset.jpg "The dune faces west across Roanoke Sound. Photo by chucka_nc, CC BY-SA 3.0.")
+
 ## Flying things
 
 Steady ocean wind hits an enormous obstacle-free slope here, which makes it one
@@ -96,12 +100,16 @@ through a concession agreement with the park. Soft sand is why beginners can
 learn here safely. If you are already a rated pilot flying your own wing, you
 need a permit from the park office, and it is free.
 
+![Large novelty kites shaped like an octopus and a crab flying above people on the dune](/images/jockeys-ridge-kites.jpg "Steady ocean wind and an obstacle free slope make this one of the better kite spots on the East Coast. Photo by Doubleduhgirls, CC BY-SA 3.0.")
+
 ## Sandboarding
 
 Allowed, no permit needed, but bring your own board. The park does not rent
 equipment. Boards with foot bindings work best, though boogie boards, skim
 boards, disc sleds and heavy cardboard are all permitted. Expect it to be slower
 than snowboarding. The appeal is the rhythm of climbing and sliding, not speed.
+
+![A wide slope of open sand falling away toward the ocean and a line of beach houses](/images/jockeys-ridge-slope.jpg "Plenty of slope, and a soft landing. Photo by Bohemian Baltimore, CC BY-SA 4.0.")
 
 ## The sound side is a different park
 
@@ -112,6 +120,8 @@ is where kiteboarders and windsurfers launch.
 
 Watch the hours, which differ. Soundside access closes at 7 p.m. from April
 through September, two hours before the main park.
+
+![The crest of the dune with the flat blue water of Roanoke Sound stretching out behind it](/images/jockeys-ridge-sound-side.jpg "Roanoke Sound from the top of the ridge, shallow and calm compared to the ocean side. Photo by Bohemian Baltimore, CC BY-SA 4.0.")
 
 ## Practical notes
 
@@ -126,3 +136,5 @@ bringing a kite or a board, or staying for the sunset.
 Hours and rules shift with the season, so it is worth checking the
 [official NC State Parks page](https://www.ncparks.gov/state-parks/jockeys-ridge-state-park)
 before you drive over.
+
+![A brown highway sign reading Jockeys Ridge State Park with a second panel reading Hang Gliding School](/images/jockeys-ridge-park-sign.jpg "The turn off US 158 in Nags Head. Photo by Ken Lund, CC BY-SA 2.0.")
