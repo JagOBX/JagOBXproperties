@@ -24,15 +24,20 @@ const API = "https://commons.wikimedia.org/w/api.php";
 const UA = "JagOBXproperties-image-fetcher/1.0 (https://jagobxproperties.com)";
 
 // Output size. The article column is 720px wide, so 1200 covers a retina render
-// of a full-width figure with nothing to spare wasted on pixels no one sees.
+// of a full-width figure with nothing wasted on pixels no one sees.
 const OUT_WIDTH = 1200;
 const OUT_QUALITY = 78;
+
+// Anything above this is treated as not yet compressed. The hand-added images
+// sit between 50 and 110 KB; a raw Commons thumbnail can be ten times that.
+const MAX_CACHED_BYTES = 220 * 1024;
 
 // Licences that allow commercial use. Anything else (NonCommercial, NoDerivs,
 // "fair use", unknown) is refused: this is a business site, not a wiki.
 const ALLOWED = /^(public domain|cc0|cc by(?:[- ]sa)?[- ]?\d?(\.\d)?)/i;
 
 const strip = (s) => String(s || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+const kb = (n) => `${Math.round(n / 1024)} KB`;
 
 async function commonsInfo(titles, width) {
   const url = new URL(API);
@@ -152,28 +157,30 @@ async function main() {
     rows.push({ ...item, licence: meta.licence, artist: meta.artist });
 
     const dest = path.join(DIR, item.file);
-    if (fs.existsSync(dest)) {
+    if (fs.existsSync(dest) && fs.statSync(dest).size <= MAX_CACHED_BYTES) {
       console.log(`have   ${item.file}`);
       continue;
     }
 
     // docs/images is committed, so a photo published on a previous build is
-    // already in the checkout. Reuse it rather than hitting Commons again.
+    // already in the checkout. Reuse it rather than hitting Commons again, but
+    // only if it is already compressed: the first build published raw
+    // thumbnails, and those need replacing rather than preserving.
     const cached = path.join(PUBLISHED, item.file);
-    if (fs.existsSync(cached) && fs.statSync(cached).size > 5000) {
-      fs.copyFileSync(cached, dest);
-      reused += 1;
-      console.log(`cached ${item.file} (${Math.round(fs.statSync(dest).size / 1024)} KB)`);
-      continue;
+    if (fs.existsSync(cached)) {
+      const size = fs.statSync(cached).size;
+      if (size > 5000 && size <= MAX_CACHED_BYTES) {
+        fs.copyFileSync(cached, dest);
+        reused += 1;
+        console.log(`cached ${item.file} (${kb(size)})`);
+        continue;
+      }
+      console.log(`stale  ${item.file} (${kb(size)} published, refetching)`);
     }
 
     const { before, after } = await downloadAndCompress(meta.url, dest);
     fetched += 1;
-    console.log(
-      `saved  ${item.file} (${Math.round(before / 1024)} KB -> ${Math.round(
-        after / 1024
-      )} KB, ${meta.licence})`
-    );
+    console.log(`saved  ${item.file} (${kb(before)} -> ${kb(after)}, ${meta.licence})`);
   }
 
   if (problems.length) {
