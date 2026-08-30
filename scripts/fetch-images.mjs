@@ -9,6 +9,8 @@
 // file whose licence has been changed or revoked fails loudly here instead of
 // sitting on a commercial site under a stale credit.
 //
+// This script also enforces the no-repeated-picture rule. See checkNoReuse.
+//
 // Run with: npm run fetch:images
 
 import fs from "node:fs";
@@ -17,6 +19,7 @@ import sharp from "sharp";
 
 const ROOT = process.cwd();
 const DIR = path.join(ROOT, "content", "images");
+const ARTICLES = path.join(ROOT, "content", "articles");
 const PUBLISHED = path.join(ROOT, "docs", "images");
 const MANIFEST = path.join(DIR, "sources.json");
 const CREDITS = path.join(DIR, "CREDITS.md");
@@ -45,6 +48,64 @@ const ALLOWED = /^(public domain|cc0|cc by(?:[- ]sa)?[- ]?\d?(\.\d)?)/i;
 
 const strip = (s) => String(s || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 const kb = (n) => `${Math.round(n / 1024)} KB`;
+
+// House rule: a picture appears once on the site. Repeating one across two
+// guides makes the whole section look padded, which is the opposite of why the
+// articles exist. Checked rather than remembered.
+function checkNoReuse() {
+  if (!fs.existsSync(ARTICLES)) return;
+  const seen = new Map();
+  const problems = [];
+
+  for (const name of fs.readdirSync(ARTICLES).filter((f) => f.endsWith(".md"))) {
+    const raw = fs.readFileSync(path.join(ARTICLES, name), "utf8");
+
+    // Front matter hero and photo, plus every Markdown image in the body.
+    const refs = [
+      ...[...raw.matchAll(/^\s*(?:hero|photo|listingPhoto):\s*(\/images\/\S+)\s*$/gm)].map(
+        (m) => m[1]
+      ),
+      ...[...raw.matchAll(/!\[[^\]]*\]\((\/images\/[^)\s"]+)/g)].map((m) => m[1]),
+    ];
+
+    for (const ref of refs) {
+      const where = seen.get(ref);
+      if (where) problems.push(`${ref}\n      used in ${where}\n      and again in ${name}`);
+      else seen.set(ref, name);
+    }
+  }
+
+  if (problems.length) {
+    console.error("\nThe same picture is used more than once:");
+    for (const p of problems) console.error(`  ${p}`);
+    console.error("\nEvery article needs its own photographs. Pick a different shot.");
+    process.exit(1);
+  }
+  console.log(`no-reuse check: ${seen.size} distinct images across the articles.`);
+}
+
+function checkManifest(images) {
+  const problems = [];
+  const byFile = new Map();
+  const bySource = new Map();
+
+  for (const item of images) {
+    if (byFile.has(item.file)) problems.push(`two entries write to ${item.file}`);
+    else byFile.set(item.file, item);
+
+    // The real duplicate risk: the same Commons photo saved under two names,
+    // which the reference check above cannot see.
+    const prev = bySource.get(item.commons);
+    if (prev) problems.push(`${item.file} and ${prev.file} are both "${item.commons}"`);
+    else bySource.set(item.commons, item);
+  }
+
+  if (problems.length) {
+    console.error("\nsources.json has duplicates:");
+    for (const p of problems) console.error(`  ${p}`);
+    process.exit(1);
+  }
+}
 
 async function commonsInfo(titles, width) {
   const url = new URL(API);
@@ -137,6 +198,8 @@ function rewriteCredits(rows) {
 }
 
 async function main() {
+  checkNoReuse();
+
   if (!fs.existsSync(MANIFEST)) {
     console.log("No content/images/sources.json, nothing to fetch.");
     return;
@@ -147,6 +210,7 @@ async function main() {
     console.log("Manifest lists no images.");
     return;
   }
+  checkManifest(images);
 
   // Ask Commons for a source a little larger than the output width so the
   // downscale has pixels to work with.
