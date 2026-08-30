@@ -13,9 +13,9 @@ duration: "1.5 to 2 hours"
 goodFor: "Families, history readers, anyone who has ever flown anywhere"
 readTime: "6 min read"
 hero: /images/wright-brothers-memorial.jpg
-photo: /images/wright-first-flight-1903.jpg
-photoAlt: "The 1903 Wright Flyer just off the ground with Wilbur Wright running alongside the right wingtip"
-photoCaption: "10:35 a.m., December 17, 1903. Photo by John T. Daniels, public domain."
+photo: /images/wright-flyer-launch-rail.jpg
+photoAlt: "The 1903 Flyer sitting on its wooden launch rail on open sand, with several men standing beside it"
+photoCaption: "The Flyer on its launch rail before the failed attempt of December 14, 1903. Photo attributed to Wilbur Wright, public domain."
 listing: sennah
 listingPhotoAlt: "Sennah's Shack in Kill Devil Hills, seen from the air"
 lede: "Powered flight started on a scrubby field in Kill Devil Hills, and the park still marks the exact spot where it stopped."
