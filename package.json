@@ -6,9 +6,10 @@
   "description": "JAGOBX Properties — Outer Banks vacation rentals",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/build-articles.mjs",
+    "build": "vite build && npm run build:articles",
     "preview": "vite preview",
-    "build:articles": "node scripts/build-articles.mjs"
+    "fetch:images": "node scripts/fetch-images.mjs",
+    "build:articles": "node scripts/fetch-images.mjs && node scripts/build-articles.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.451.0",
