@@ -23,14 +23,21 @@ const CREDITS = path.join(DIR, "CREDITS.md");
 const API = "https://commons.wikimedia.org/w/api.php";
 const UA = "JagOBXproperties-image-fetcher/1.0 (https://jagobxproperties.com)";
 
-// Output size. The article column is 720px wide, so 1200 covers a retina render
-// of a full-width figure with nothing wasted on pixels no one sees.
-const OUT_WIDTH = 1200;
-const OUT_QUALITY = 78;
+// Ceiling for a published photo. The hand-added images sit between 50 and
+// 110 KB; a raw Commons thumbnail can be ten times that. This doubles as the
+// "already compressed" test when deciding whether a cached file can be reused,
+// so the ladder below must actually be able to reach it.
+const MAX_BYTES = 220 * 1024;
 
-// Anything above this is treated as not yet compressed. The hand-added images
-// sit between 50 and 110 KB; a raw Commons thumbnail can be ten times that.
-const MAX_CACHED_BYTES = 220 * 1024;
+// Tried in order, first result under MAX_BYTES wins. The article column is
+// 720px wide, so 1200 covers a retina render of a full-width figure. Detailed
+// subjects (stone, foliage, texture) need the later steps.
+const LADDER = [
+  { width: 1200, quality: 78 },
+  { width: 1200, quality: 68 },
+  { width: 1000, quality: 66 },
+  { width: 900, quality: 62 },
+];
 
 // Licences that allow commercial use. Anything else (NonCommercial, NoDerivs,
 // "fair use", unknown) is refused: this is a business site, not a wiki.
@@ -76,14 +83,23 @@ async function downloadAndCompress(url, dest) {
   const raw = Buffer.from(await res.arrayBuffer());
   if (raw.length < 5000) throw new Error(`suspiciously small download (${raw.length} bytes)`);
 
-  const out = await sharp(raw)
-    .rotate()
-    .resize({ width: OUT_WIDTH, withoutEnlargement: true })
-    .jpeg({ quality: OUT_QUALITY, mozjpeg: true })
-    .toBuffer();
+  let best = null;
+  let step = null;
+  for (const rung of LADDER) {
+    const out = await sharp(raw)
+      .rotate()
+      .resize({ width: rung.width, withoutEnlargement: true })
+      .jpeg({ quality: rung.quality, mozjpeg: true })
+      .toBuffer();
+    if (!best || out.length < best.length) {
+      best = out;
+      step = rung;
+    }
+    if (out.length <= MAX_BYTES) break;
+  }
 
-  fs.writeFileSync(dest, out);
-  return { before: raw.length, after: out.length };
+  fs.writeFileSync(dest, best);
+  return { before: raw.length, after: best.length, step, over: best.length > MAX_BYTES };
 }
 
 function rewriteCredits(rows) {
@@ -157,7 +173,7 @@ async function main() {
     rows.push({ ...item, licence: meta.licence, artist: meta.artist });
 
     const dest = path.join(DIR, item.file);
-    if (fs.existsSync(dest) && fs.statSync(dest).size <= MAX_CACHED_BYTES) {
+    if (fs.existsSync(dest) && fs.statSync(dest).size <= MAX_BYTES) {
       console.log(`have   ${item.file}`);
       continue;
     }
@@ -169,7 +185,7 @@ async function main() {
     const cached = path.join(PUBLISHED, item.file);
     if (fs.existsSync(cached)) {
       const size = fs.statSync(cached).size;
-      if (size > 5000 && size <= MAX_CACHED_BYTES) {
+      if (size > 5000 && size <= MAX_BYTES) {
         fs.copyFileSync(cached, dest);
         reused += 1;
         console.log(`cached ${item.file} (${kb(size)})`);
@@ -178,9 +194,19 @@ async function main() {
       console.log(`stale  ${item.file} (${kb(size)} published, refetching)`);
     }
 
-    const { before, after } = await downloadAndCompress(meta.url, dest);
+    const r = await downloadAndCompress(meta.url, dest);
     fetched += 1;
-    console.log(`saved  ${item.file} (${kb(before)} -> ${kb(after)}, ${meta.licence})`);
+    console.log(
+      `saved  ${item.file} (${kb(r.before)} -> ${kb(r.after)} at ${r.step.width}px q${
+        r.step.quality
+      }, ${meta.licence})`
+    );
+    if (r.over) {
+      console.warn(
+        `       still over ${kb(MAX_BYTES)}; it will be refetched next build. ` +
+          `Pick a less detailed photo or add a lower rung to LADDER.`
+      );
+    }
   }
 
   if (problems.length) {
