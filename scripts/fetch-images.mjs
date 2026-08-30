@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
 // Downloads article photos listed in content/images/sources.json from Wikimedia
-// Commons, then rewrites the generated half of CREDITS.md.
+// Commons, compresses them, and rewrites the generated half of CREDITS.md.
 //
 // Why fetch rather than commit binaries: the licence and the author line are
 // facts that live on Commons, not in this repo. Reading them at fetch time means
@@ -13,13 +13,20 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import sharp from "sharp";
 
 const ROOT = process.cwd();
 const DIR = path.join(ROOT, "content", "images");
+const PUBLISHED = path.join(ROOT, "docs", "images");
 const MANIFEST = path.join(DIR, "sources.json");
 const CREDITS = path.join(DIR, "CREDITS.md");
 const API = "https://commons.wikimedia.org/w/api.php";
 const UA = "JagOBXproperties-image-fetcher/1.0 (https://jagobxproperties.com)";
+
+// Output size. The article column is 720px wide, so 1200 covers a retina render
+// of a full-width figure with nothing to spare wasted on pixels no one sees.
+const OUT_WIDTH = 1200;
+const OUT_QUALITY = 78;
 
 // Licences that allow commercial use. Anything else (NonCommercial, NoDerivs,
 // "fair use", unknown) is refused: this is a business site, not a wiki.
@@ -53,19 +60,25 @@ async function commonsInfo(titles, width) {
       url: ii.thumburl || ii.url,
       licence: strip(e.LicenseShortName?.value) || "unknown",
       artist: strip(e.Artist?.value) || "",
-      descUrl: ii.descriptionurl || "",
     });
   }
   return out;
 }
 
-async function download(url, dest) {
+async function downloadAndCompress(url, dest) {
   const res = await fetch(url, { headers: { "User-Agent": UA } });
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
-  const buf = Buffer.from(await res.arrayBuffer());
-  if (buf.length < 5000) throw new Error(`suspiciously small download (${buf.length} bytes)`);
-  fs.writeFileSync(dest, buf);
-  return buf.length;
+  const raw = Buffer.from(await res.arrayBuffer());
+  if (raw.length < 5000) throw new Error(`suspiciously small download (${raw.length} bytes)`);
+
+  const out = await sharp(raw)
+    .rotate()
+    .resize({ width: OUT_WIDTH, withoutEnlargement: true })
+    .jpeg({ quality: OUT_QUALITY, mozjpeg: true })
+    .toBuffer();
+
+  fs.writeFileSync(dest, out);
+  return { before: raw.length, after: out.length };
 }
 
 function rewriteCredits(rows) {
@@ -109,17 +122,19 @@ async function main() {
   }
   const manifest = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
   const images = manifest.images || [];
-  const width = manifest.width || 1400;
   if (!images.length) {
     console.log("Manifest lists no images.");
     return;
   }
 
-  const info = await commonsInfo(images.map((i) => i.commons), width);
+  // Ask Commons for a source a little larger than the output width so the
+  // downscale has pixels to work with.
+  const info = await commonsInfo(images.map((i) => i.commons), manifest.width || 1400);
 
   const rows = [];
   const problems = [];
   let fetched = 0;
+  let reused = 0;
 
   for (const item of images) {
     const meta = info.get(item.commons);
@@ -138,12 +153,27 @@ async function main() {
 
     const dest = path.join(DIR, item.file);
     if (fs.existsSync(dest)) {
-      console.log(`have  ${item.file}`);
+      console.log(`have   ${item.file}`);
       continue;
     }
-    const bytes = await download(meta.url, dest);
+
+    // docs/images is committed, so a photo published on a previous build is
+    // already in the checkout. Reuse it rather than hitting Commons again.
+    const cached = path.join(PUBLISHED, item.file);
+    if (fs.existsSync(cached) && fs.statSync(cached).size > 5000) {
+      fs.copyFileSync(cached, dest);
+      reused += 1;
+      console.log(`cached ${item.file} (${Math.round(fs.statSync(dest).size / 1024)} KB)`);
+      continue;
+    }
+
+    const { before, after } = await downloadAndCompress(meta.url, dest);
     fetched += 1;
-    console.log(`saved ${item.file} (${Math.round(bytes / 1024)} KB, ${meta.licence})`);
+    console.log(
+      `saved  ${item.file} (${Math.round(before / 1024)} KB -> ${Math.round(
+        after / 1024
+      )} KB, ${meta.licence})`
+    );
   }
 
   if (problems.length) {
@@ -153,7 +183,9 @@ async function main() {
   }
 
   rewriteCredits(rows);
-  console.log(`\n${fetched} new file(s). ${rows.length} entries written to CREDITS.md.`);
+  console.log(
+    `\n${fetched} downloaded, ${reused} reused from docs/images. ${rows.length} credit rows written.`
+  );
 }
 
 main().catch((err) => {
