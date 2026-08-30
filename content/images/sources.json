@@ -1,0 +1,53 @@
+{
+  "_comment": [
+    "Photos fetched from Wikimedia Commons by scripts/fetch-images.mjs.",
+    "Add an entry, run npm run fetch:images, and the file plus its credit row appear.",
+    "'commons' is the exact File: title on commons.wikimedia.org. The fetcher reads",
+    "the licence and author from the Commons API at fetch time and refuses anything",
+    "that is not public domain or a commercial-use Creative Commons licence.",
+    "Hand-added files are not listed here; see CREDITS.md for those."
+  ],
+  "width": 1400,
+  "images": [
+    {
+      "file": "wright-first-flight-1903.jpg",
+      "commons": "First flight2.jpg",
+      "subject": "The first powered flight, 10:35 a.m. on December 17 1903"
+    },
+    {
+      "file": "wright-flight-line.jpg",
+      "commons": "Flight Line (4711507005).jpg",
+      "subject": "The takeoff boulder with the four distance markers beyond it"
+    },
+    {
+      "file": "wright-120ft-marker.jpg",
+      "commons": "First Flight 120 ft (4712148174).jpg",
+      "subject": "The marker at the end of the first flight"
+    },
+    {
+      "file": "wright-monument-tower.jpg",
+      "commons": "Wright Brothers Memorial-27527-1.JPG",
+      "subject": "The granite monument on top of Kill Devil Hill"
+    },
+    {
+      "file": "wright-view-from-hill.jpg",
+      "commons": "Overlook of Wright Brothers National Memorial from Big Kill Devil Hill (OBX, NC).jpg",
+      "subject": "The flight field and the memorial seen from the top of the hill"
+    },
+    {
+      "file": "wright-camp-hangar.jpg",
+      "commons": "Hangar, Wright Brothers National Memorial, Kill Devil Hills, North Carolina (14447311845).jpg",
+      "subject": "Inside the reconstructed 1903 hangar"
+    },
+    {
+      "file": "wright-visitor-center.jpg",
+      "commons": "Oblique view of the Wright Brothers Memorial Visitor Center - Wright Brothers National Memorial Visitor Center, Highway 158, Kill Devil Hills, Dare County, NC HABS NC-396-42 (CT).tif",
+      "subject": "The 1960 visitor center, a National Historic Landmark in its own right"
+    },
+    {
+      "file": "wright-entrance-sign.jpg",
+      "commons": "Entering Wright Brothers National Memorial, Kill Devil Hills, North Carolina (14424122246).jpg",
+      "subject": "The entrance on US 158 at mile post 7.5"
+    }
+  ]
+}
