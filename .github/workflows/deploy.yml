@@ -58,7 +58,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs
+          # content/images as well as docs: the image fetcher downloads photos
+          # and rewrites CREDITS.md in content/images, and without this both are
+          # discarded when the runner goes away, so the credit table never
+          # reaches the repo. Committing them also lets the next build reuse the
+          # files instead of refetching everything from Commons.
+          git add docs content/images
           if git diff --staged --quiet; then
             echo "Build output unchanged."
           else
