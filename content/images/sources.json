@@ -5,10 +5,17 @@
     "'commons' is the exact File: title on commons.wikimedia.org. The fetcher reads",
     "the licence and author from the Commons API at fetch time and refuses anything",
     "that is not public domain or a commercial-use Creative Commons licence.",
+    "One photo per entry and one use per photo: the fetcher rejects two entries",
+    "sharing a Commons source, and fails the build if any image is used twice.",
     "Hand-added files are not listed here; see CREDITS.md for those."
   ],
   "width": 1400,
   "images": [
+    {
+      "file": "wright-flyer-launch-rail.jpg",
+      "commons": "1903 Wright Flyer on launch track before unsuccessful flight attempt 14 December 1903.jpg",
+      "subject": "The Flyer on its launch rail before the failed attempt of 14 December 1903"
+    },
     {
       "file": "wright-first-flight-1903.jpg",
       "commons": "First flight2.jpg",
