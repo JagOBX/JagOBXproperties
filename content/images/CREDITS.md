@@ -45,6 +45,7 @@ the licence and credit columns are read from the Wikimedia Commons API each run.
 
 | File | Subject | Source | Licence | Credit needed |
 | --- | --- | --- | --- | --- |
+| wright-flyer-launch-rail.jpg | The Flyer on its launch rail before the failed attempt of 14 December 1903 | Wikimedia Commons, 1903 Wright Flyer on launch track before unsuccessful flight attempt 14 December 1903.jpg | Public domain | Attributed to Wilbur Wright (1867–1912) and/or Orville Wright (1871–1948). |
 | wright-first-flight-1903.jpg | The first powered flight, 10:35 a.m. on December 17 1903 | Wikimedia Commons, First flight2.jpg | Public domain | John T. Daniels |
 | wright-flight-line.jpg | The takeoff boulder with the four distance markers beyond it | Wikimedia Commons, Flight Line (4711507005).jpg | CC BY 2.0 | rickpilot_2000 |
 | wright-120ft-marker.jpg | The marker at the end of the first flight | Wikimedia Commons, First Flight 120 ft (4712148174).jpg | CC BY 2.0 | rickpilot_2000 |
