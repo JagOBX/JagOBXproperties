@@ -62,5 +62,14 @@ the licence and credit columns are read from the Wikimedia Commons API each run.
 | bodie-keepers-quarters.jpg | The Double Keepers' Quarters beside the tower | Wikimedia Commons, Bodie Island Light Cape Hatteras (14839530629).jpg | CC BY 2.0 | Mark Ittleman from Houston, Texas when we are there...., USA |
 | bodie-marsh-boardwalk.jpg | The boardwalk running out through the marsh behind the station | Wikimedia Commons, Bodie Island Light (9124643931).jpg | CC BY 2.0 | John Buie from USA |
 | bodie-sunrise-sky.jpg | The tower at sunrise, for the closing practical section | Wikimedia Commons, Bodie Island Light at sunrise (28954522996).jpg | CC BY 2.0 | John Buie from USA |
+| currituck-sunset.jpg | The tower in silhouette against an orange sunset | Wikimedia Commons, Currituck sunset.jpg | CC BY-SA 2.0 | nophun201 |
+| currituck-tower-pines.jpg | The tower framed by the pines around the compound | Wikimedia Commons, Currituck Beach Lighthouse.jpg | CC BY-SA 3.0 | Kenneth Hawes |
+| currituck-brick.jpg | The unpainted brickwork of the 1875 tower | Wikimedia Commons, Currituck light on the outer banks of north carolina by Bonnie Gruenberg.jpg | CC BY-SA 3.0 | Bonnie Gruenberg |
+| currituck-stairs.jpg | The iron spiral staircase seen from below | Wikimedia Commons, Currituck Beach Light - stairs.jpg | CC BY 2.0 | rpertiet |
+| currituck-stair-window.jpg | A stairwell window on one of the nine landings | Wikimedia Commons, Currituck beach Lighthouse.jpg | CC BY-SA 4.0 | Riokausa |
+| currituck-view-corolla.jpg | Corolla and the ocean seen from the gallery | Wikimedia Commons, Currituck Lighthouse-3971 (37318850812).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
+| currituck-keepers-house.jpg | The 1876 keepers' duplex inside the compound | Wikimedia Commons, Currituck Beach Light - keepers house.jpg | CC BY 2.0 | The Woz from Kansas City, MO |
+| currituck-whalehead.jpg | Whalehead and Historic Corolla Park on the sound | Wikimedia Commons, Currituck Lighthouse View.jpg | CC BY 2.0 | Michael Bentley |
+| currituck-reeds.jpg | The tower rising above the reeds | Wikimedia Commons, Currituck Beach Light.JPG | CC BY-SA 3.0 | Stryker33 |
 
 <!-- fetched:end -->
