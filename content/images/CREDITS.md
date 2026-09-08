@@ -78,5 +78,10 @@ the licence and credit columns are read from the Wikimedia Commons API each run.
 | aquarium-sliders.jpg | Yellow-bellied sliders on a log in the freshwater tanks | Wikimedia Commons, Pseudemys scripta scripta - Yellow-bellied slider 01.jpg | CC BY-SA 3.0 | Captain-tucker |
 | aquarium-turtle-statue.jpg | The bronze sea turtle on the aquarium grounds | Wikimedia Commons, Bronze Sea Turtle Statue.JPG | CC BY-SA 4.0 | Chelsea Miller |
 | aquarium-slider-closeup.jpg | A slider turtle resting on a rock | Wikimedia Commons, Pseudemys scripta scripta - Yellow-bellied slider 02.jpg | CC BY-SA 3.0 | Captain-tucker |
+| jennettes-pier-dusk.jpg | The pier at dusk from the beach | Wikimedia Commons, Jennette's Pier-3725-Edit (36524404973).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
+| jennettes-pier-waves.jpg | Waves breaking under the pier with the pier house behind | Wikimedia Commons, Jennette's Pier-3744 (36939703020).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
+| jennettes-pier-pilings.jpg | Surf hitting the concrete pilings under the deck | Wikimedia Commons, Jennette's Pier-3761 (37194043261).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
+| jennettes-pier-surfer.jpg | A surfer on the break beside the pier | Wikimedia Commons, Jennette's Pier-3755 (37194053911).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
+| jennettes-pier-surf.jpg | Choppy water and breaking surf off the end of the pier | Wikimedia Commons, Jennette's Pier-3757 (36524386083).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
 
 <!-- fetched:end -->
