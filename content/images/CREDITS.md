@@ -71,5 +71,12 @@ the licence and credit columns are read from the Wikimedia Commons API each run.
 | currituck-keepers-house.jpg | The 1876 keepers' duplex inside the compound | Wikimedia Commons, Currituck Beach Light - keepers house.jpg | CC BY 2.0 | The Woz from Kansas City, MO |
 | currituck-whalehead.jpg | Whalehead and Historic Corolla Park on the sound | Wikimedia Commons, Currituck Lighthouse View.jpg | CC BY 2.0 | Michael Bentley |
 | currituck-reeds.jpg | The tower rising above the reeds | Wikimedia Commons, Currituck Beach Light.JPG | CC BY-SA 3.0 | Stryker33 |
+| aquarium-exterior.jpg | The aquarium building from the approach | Wikimedia Commons, NC Aquarium at Roanoke Island.jpg | CC BY-SA 3.0 | RadioFan (talk) |
+| aquarium-grounds.jpg | Visitors in the wooded grounds beside the building | Wikimedia Commons, Interior view of the North Carolina Aquarium on Roanoke Island (8634424193).jpg | Public domain | Government &amp; Heritage Library, State Library of NC from Raleigh, NC, United States |
+| aquarium-shark.jpg | A shark in the big ocean tank | Wikimedia Commons, Shark at North Carolina Aquarium.jpg | CC BY-SA 4.0 | Royian |
+| aquarium-otter.jpg | A river otter at the edge of its pool | Wikimedia Commons, Lontra canadensis North Carolina Aquarium on Roanoke Island 02.jpg | CC BY-SA 3.0 | Captain-tucker |
+| aquarium-sliders.jpg | Yellow-bellied sliders on a log in the freshwater tanks | Wikimedia Commons, Pseudemys scripta scripta - Yellow-bellied slider 01.jpg | CC BY-SA 3.0 | Captain-tucker |
+| aquarium-turtle-statue.jpg | The bronze sea turtle on the aquarium grounds | Wikimedia Commons, Bronze Sea Turtle Statue.JPG | CC BY-SA 4.0 | Chelsea Miller |
+| aquarium-slider-closeup.jpg | A slider turtle resting on a rock | Wikimedia Commons, Pseudemys scripta scripta - Yellow-bellied slider 02.jpg | CC BY-SA 3.0 | Captain-tucker |
 
 <!-- fetched:end -->
