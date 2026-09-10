@@ -35,11 +35,19 @@ const MAX_BYTES = 220 * 1024;
 // Tried in order, first result under MAX_BYTES wins. The article column is
 // 720px wide, so 1200 covers a retina render of a full-width figure. Detailed
 // subjects (stone, foliage, texture) need the later steps.
+//
+// The last two rungs exist because of one photo. The Virginia Dare monument at
+// Fort Raleigh is carved stone standing in dappled leaf litter, which is about
+// the worst case JPEG can be handed: it came out of 900px q62 at 280 KB, over
+// the ceiling, so every build refetched it and threw it away again. A rung only
+// runs when the ones above it fail, so nothing that already fits is touched.
 const LADDER = [
   { width: 1200, quality: 78 },
   { width: 1200, quality: 68 },
   { width: 1000, quality: 66 },
   { width: 900, quality: 62 },
+  { width: 800, quality: 58 },
+  { width: 700, quality: 52 },
 ];
 
 // Licences that allow commercial use. Anything else (NonCommercial, NoDerivs,
