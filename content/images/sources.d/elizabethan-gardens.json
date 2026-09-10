@@ -1,0 +1,33 @@
+{
+  "_comment": [
+    "Manifest fragment. Merged into sources.json's image list by scripts/fetch-images.mjs.",
+    "One fragment per article keeps each push small; the duplicate checks run across the merged list."
+  ],
+  "images": [
+    {
+      "file": "eg-sunken-garden-fountain.jpg",
+      "commons": "Fountain with statue of Aphrodite, image 1.jpg",
+      "subject": "The Italian fountain at the centre of the sunken garden, Elizabethan Gardens"
+    },
+    {
+      "file": "eg-entrance.jpg",
+      "commons": "Elizabethan Gardens entrance.jpg",
+      "subject": "The brick gatehouse entrance to the Elizabethan Gardens"
+    },
+    {
+      "file": "eg-queen-elizabeth-statue.jpg",
+      "commons": "Queen Elizabeth I statue at Elizabethan Gardens image 2.jpg",
+      "subject": "The bronze statue of Queen Elizabeth I among the trees"
+    },
+    {
+      "file": "eg-virginia-dare-statue.jpg",
+      "commons": "Statue of Virginia Dare at Elizabethan Gardens image 2.jpg",
+      "subject": "The Virginia Dare marble by Maria Louisa Lander"
+    },
+    {
+      "file": "eg-old-pier.jpg",
+      "commons": "Old pier at Elizabethan Gardens image 1.jpg",
+      "subject": "Brick pillars of the ruined pier on the eroded sound shoreline"
+    }
+  ]
+}

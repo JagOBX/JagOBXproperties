@@ -22,6 +22,7 @@ const DIR = path.join(ROOT, "content", "images");
 const ARTICLES = path.join(ROOT, "content", "articles");
 const PUBLISHED = path.join(ROOT, "docs", "images");
 const MANIFEST = path.join(DIR, "sources.json");
+const FRAGMENTS = path.join(DIR, "sources.d");
 const CREDITS = path.join(DIR, "CREDITS.md");
 const API = "https://commons.wikimedia.org/w/api.php";
 const UA = "JagOBXproperties-image-fetcher/1.0 (https://jagobxproperties.com)";
@@ -90,6 +91,36 @@ function checkNoReuse() {
     process.exit(1);
   }
   console.log(`no-reuse check: ${seen.size} distinct images across the articles.`);
+}
+
+// The manifest is sources.json plus every *.json in sources.d, merged in that
+// order (fragments alphabetically). Reason: this repo is often edited through
+// the GitHub API, which can only replace a whole file, so appending one photo
+// to a single growing manifest meant resending all of it every time. One
+// fragment per article keeps each change small. Nothing about the checks
+// changes: checkManifest and checkNoReuse run across the merged list, so a
+// duplicate file name or a duplicate Commons source still fails the build no
+// matter which fragment it came from.
+function loadManifest() {
+  const base = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
+  const images = [...(base.images || [])];
+  const sources = ["sources.json"];
+
+  if (fs.existsSync(FRAGMENTS)) {
+    const files = fs
+      .readdirSync(FRAGMENTS)
+      .filter((f) => f.endsWith(".json"))
+      .sort();
+    for (const name of files) {
+      const frag = JSON.parse(fs.readFileSync(path.join(FRAGMENTS, name), "utf8"));
+      const add = frag.images || [];
+      images.push(...add);
+      sources.push(`sources.d/${name} (${add.length})`);
+    }
+  }
+
+  console.log(`manifest: ${images.length} images from ${sources.join(", ")}`);
+  return { width: base.width, images };
 }
 
 function checkManifest(images) {
@@ -247,7 +278,7 @@ async function main() {
     console.log("No content/images/sources.json, nothing to fetch.");
     return;
   }
-  const manifest = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
+  const manifest = loadManifest();
   const images = manifest.images || [];
   if (!images.length) {
     console.log("Manifest lists no images.");
