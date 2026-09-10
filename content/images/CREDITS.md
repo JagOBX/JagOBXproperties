@@ -83,5 +83,18 @@ the licence and credit columns are read from the Wikimedia Commons API each run.
 | jennettes-pier-pilings.jpg | Surf hitting the concrete pilings under the deck | Wikimedia Commons, Jennette's Pier-3761 (37194043261).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
 | jennettes-pier-surfer.jpg | A surfer on the break beside the pier | Wikimedia Commons, Jennette's Pier-3755 (37194053911).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
 | jennettes-pier-surf.jpg | Choppy water and breaking surf off the end of the pier | Wikimedia Commons, Jennette's Pier-3757 (36524386083).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
+| fort-raleigh-earthworks.jpg | The reconstructed Fort Raleigh earthworks with the path cut through the bank | Wikimedia Commons, Fort Raleigh National Historic Site earthworks 2 - Sarah Stierch.jpg | CC BY 4.0 | Sarah Stierch |
+| fort-raleigh-entrance-sign.jpg | The park entrance sign listing the Lost Colony drama and the Elizabethan Gardens | Wikimedia Commons, Fort Raleigh National Historic Site entrance 01.jpg | CC BY-SA 4.0 | Bohemian Baltimore |
+| fort-raleigh-earthwork-mound.jpg | The earthwork bank and ditch seen from outside | Wikimedia Commons, Fort Raleigh National Historic Site Earthworks 3 - Sarah Stierch.jpg | CC BY 4.0 | Sarah Stierch |
+| fort-raleigh-virginia-dare-stone.jpg | The Virginia Dare monument among the trees | Wikimedia Commons, Virginia Dare memorial at Fort Raleigh - Sarah Stierch.jpg | Public domain | Sarah Stierch for image, unknown for sculpture |
+| fort-raleigh-visitor-center.jpg | Live oaks and the walkway outside the Lindsay Warren Visitor Center | Wikimedia Commons, Visitor Center, Fort Raleigh National Historic Site, Manteo, Roanoke Island, North Carolina (14273745319).jpg | CC BY-SA 2.0 | Ken Lund from Reno, Nevada, USA |
+| nags-head-woods-forest.jpg | A green clearing inside the maritime forest at Nags Head Woods | Wikimedia Commons, Nags Head Woods Preserve-3907 (23497654648).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
+| nags-head-woods-footbridge.jpg | A wooden footbridge on one of the preserve trails | Wikimedia Commons, Nags Head Woods Preserve-3917-2 (37301670196).jpg | CC BY 2.0 | Roger Mulligan from Hagerstown, MD, United States |
+| nags-head-woods-ghost-forest.jpg | Dead standing trees where salt water reaches the forest edge | Wikimedia Commons, Ghost forest in Nags Head Woods, North Carolina - KG (51) (37946258775).jpg | CC BY 2.0 | NC Wetlands from Raleigh, NC |
+| nags-head-woods-sound-view.jpg | Brackish marsh and Bodie Sound from the west edge of the preserve | Wikimedia Commons, Bodie Sound from Nags Head Woods (4503852603).jpg | CC BY 2.0 | Jason Hollinger |
+| corolla-horses-dune.jpg | Wild Banker horses grazing on a dune at Corolla, geotagged on the Currituck Outer Banks | Wikimedia Commons, Wild Horses Corolla Beach North Carolina 02.jpg | CC BY-SA 4.0 | Kabongolei |
+| corolla-horses-beach.jpg | Five of the wild Spanish Mustangs of Corolla on the beach | Wikimedia Commons, SpanishMustangsOfCorolla.jpg | CC BY-SA 3.0 | Kevincollins123 |
+| corolla-horse-grazing.jpg | A Banker horse grazing on the dune grass above the sand at Corolla | Wikimedia Commons, Wild Horses Corolla Beach North Carolina 01.jpg | CC BY-SA 4.0 | Kabongolei |
+| corolla-horse-yard.jpg | A young male wild horse on a lawn in Carova, inside the herd's range | Wikimedia Commons, Wild horse in Carova, North Carolina.jpg | CC0 | Packer1028 |
 
 <!-- fetched:end -->
