@@ -1,0 +1,32 @@
+{
+  "_comment": [
+    "Manifest fragment. Merged into sources.json's image list by scripts/fetch-images.mjs."
+  ],
+  "images": [
+    {
+      "file": "whalehead-house-footbridge.jpg",
+      "commons": "Whalehead Club in Corolla NC.jpg",
+      "subject": "The Whalehead house seen from the footbridge over the boat basin"
+    },
+    {
+      "file": "whalehead-boat-basin.jpg",
+      "commons": "Whalehead Club and Boat Basin.JPG",
+      "subject": "The house across the lawn and boat basin"
+    },
+    {
+      "file": "whalehead-boathouse-lighthouse.jpg",
+      "commons": "Whalehead Club, Bootshaus (53298158763).jpg",
+      "subject": "The restored boathouse with the Currituck Beach Lighthouse behind it"
+    },
+    {
+      "file": "whalehead-park.jpg",
+      "commons": "Whalehead Club.jpg",
+      "subject": "Historic Corolla Park from the air, house, boat basin and ocean beyond"
+    },
+    {
+      "file": "whalehead-sound.jpg",
+      "commons": "CurrituckSound.jpg",
+      "subject": "Currituck Sound and a dock seen from the Whalehead grounds"
+    }
+  ]
+}
