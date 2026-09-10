@@ -96,5 +96,10 @@ the licence and credit columns are read from the Wikimedia Commons API each run.
 | corolla-horses-beach.jpg | Five of the wild Spanish Mustangs of Corolla on the beach | Wikimedia Commons, SpanishMustangsOfCorolla.jpg | CC BY-SA 3.0 | Kevincollins123 |
 | corolla-horse-grazing.jpg | A Banker horse grazing on the dune grass above the sand at Corolla | Wikimedia Commons, Wild Horses Corolla Beach North Carolina 01.jpg | CC BY-SA 4.0 | Kabongolei |
 | corolla-horse-yard.jpg | A young male wild horse on a lawn in Carova, inside the herd's range | Wikimedia Commons, Wild horse in Carova, North Carolina.jpg | CC0 | Packer1028 |
+| eg-sunken-garden-fountain.jpg | The Italian fountain at the centre of the sunken garden, Elizabethan Gardens | Wikimedia Commons, Fountain with statue of Aphrodite, image 1.jpg | CC BY-SA 4.0 | DrStew82 |
+| eg-entrance.jpg | The brick gatehouse entrance to the Elizabethan Gardens | Wikimedia Commons, Elizabethan Gardens entrance.jpg | CC BY-SA 3.0 | Captain-tucker |
+| eg-queen-elizabeth-statue.jpg | The bronze statue of Queen Elizabeth I among the trees | Wikimedia Commons, Queen Elizabeth I statue at Elizabethan Gardens image 2.jpg | CC BY-SA 4.0 | DrStew82 |
+| eg-virginia-dare-statue.jpg | The Virginia Dare marble by Maria Louisa Lander | Wikimedia Commons, Statue of Virginia Dare at Elizabethan Gardens image 2.jpg | CC BY-SA 4.0 | DrStew82 |
+| eg-old-pier.jpg | Brick pillars of the ruined pier on the eroded sound shoreline | Wikimedia Commons, Old pier at Elizabethan Gardens image 1.jpg | CC BY-SA 4.0 | DrStew82 |
 
 <!-- fetched:end -->
