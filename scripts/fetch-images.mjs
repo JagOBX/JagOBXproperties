@@ -107,7 +107,16 @@ function checkManifest(images) {
   }
 }
 
-async function commonsInfo(titles, width) {
+// The Commons API caps the `titles` parameter at 50 per request. Sending more
+// comes back as {"error":{"code":"toomanyvalues"}} with NO `query` block at
+// all, and because the page loop below only ever read `data.query?.pages`, an
+// empty map meant every single image was reported as "not found on Commons".
+// That is what a 51 entry manifest looked like: 51 false negatives and no
+// mention of the real cause. So batch the lookups, and treat an API error as
+// an error rather than as an empty result.
+const TITLES_PER_REQUEST = 40;
+
+async function commonsInfoBatch(titles, width) {
   const url = new URL(API);
   url.searchParams.set("action", "query");
   url.searchParams.set("titles", titles.map((t) => `File:${t}`).join("|"));
@@ -121,8 +130,18 @@ async function commonsInfo(titles, width) {
   if (!res.ok) throw new Error(`Commons API ${res.status} ${res.statusText}`);
   const data = await res.json();
 
+  if (data.error) {
+    throw new Error(`Commons API error "${data.error.code}": ${data.error.info}`);
+  }
+  if (!Array.isArray(data.query?.pages)) {
+    throw new Error(
+      `Commons API returned no pages for a batch of ${titles.length} titles. ` +
+        `Raw keys: ${Object.keys(data).join(", ") || "none"}`
+    );
+  }
+
   const out = new Map();
-  for (const page of data.query?.pages || []) {
+  for (const page of data.query.pages) {
     if (page.missing) {
       out.set(page.title.replace(/^File:/, ""), { missing: true });
       continue;
@@ -135,6 +154,22 @@ async function commonsInfo(titles, width) {
       artist: strip(e.Artist?.value) || "",
     });
   }
+  return out;
+}
+
+async function commonsInfo(titles, width) {
+  const out = new Map();
+  const batches = Math.ceil(titles.length / TITLES_PER_REQUEST) || 1;
+
+  for (let i = 0; i < titles.length; i += TITLES_PER_REQUEST) {
+    const batch = titles.slice(i, i + TITLES_PER_REQUEST);
+    const n = i / TITLES_PER_REQUEST + 1;
+    console.log(`Commons lookup: batch ${n} of ${batches}, ${batch.length} titles.`);
+    const part = await commonsInfoBatch(batch, width);
+    for (const [key, value] of part) out.set(key, value);
+  }
+
+  console.log(`Commons lookup: ${out.size} of ${titles.length} titles resolved.`);
   return out;
 }
 
