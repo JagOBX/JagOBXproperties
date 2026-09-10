@@ -101,5 +101,10 @@ the licence and credit columns are read from the Wikimedia Commons API each run.
 | eg-queen-elizabeth-statue.jpg | The bronze statue of Queen Elizabeth I among the trees | Wikimedia Commons, Queen Elizabeth I statue at Elizabethan Gardens image 2.jpg | CC BY-SA 4.0 | DrStew82 |
 | eg-virginia-dare-statue.jpg | The Virginia Dare marble by Maria Louisa Lander | Wikimedia Commons, Statue of Virginia Dare at Elizabethan Gardens image 2.jpg | CC BY-SA 4.0 | DrStew82 |
 | eg-old-pier.jpg | Brick pillars of the ruined pier on the eroded sound shoreline | Wikimedia Commons, Old pier at Elizabethan Gardens image 1.jpg | CC BY-SA 4.0 | DrStew82 |
+| whalehead-house-footbridge.jpg | The Whalehead house seen from the footbridge over the boat basin | Wikimedia Commons, Whalehead Club in Corolla NC.jpg | CC BY-SA 4.0 | Kenneth M Fischer |
+| whalehead-boat-basin.jpg | The house across the lawn and boat basin | Wikimedia Commons, Whalehead Club and Boat Basin.JPG | CC BY-SA 3.0 | SteelCityB |
+| whalehead-boathouse-lighthouse.jpg | The restored boathouse with the Currituck Beach Lighthouse behind it | Wikimedia Commons, Whalehead Club, Bootshaus (53298158763).jpg | CC BY 2.0 | Watts |
+| whalehead-park.jpg | Historic Corolla Park from the air, house, boat basin and ocean beyond | Wikimedia Commons, Whalehead Club.jpg | CC BY-SA 3.0 | SteelCityB |
+| whalehead-sound.jpg | Currituck Sound and a dock seen from the Whalehead grounds | Wikimedia Commons, CurrituckSound.jpg | CC BY-SA 3.0 | Doug Smith |
 
 <!-- fetched:end -->
